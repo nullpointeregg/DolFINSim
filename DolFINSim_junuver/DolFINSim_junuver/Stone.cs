@@ -42,18 +42,28 @@ namespace DolFINSim_junuver
             m_piece = _piece;
         }
 
-        public void PlaceStone(in Player[][] _grid)
+        public void PlaceStone(in Player[][] _grid, Panel m_panel = null)
         {
-            _grid[m_indexPosition.Y][m_indexPosition.X] = m_player;
+            if (m_panel == null)
+            {
+                _grid[m_indexPosition.Y][m_indexPosition.X] = m_player;
+                return;
+            }
+            if (IsOnDisplay(m_panel) || m_panel == null)
+                _grid[m_indexPosition.Y][m_indexPosition.X] = m_player;
         }
         public void Display(Panel _panel)
         {
-            if (!_panel.Children.Contains(m_piece))
+            if (!IsOnDisplay(_panel))
                 _panel.Children.Add(m_piece);
         }
         public void Destroy(Panel _panel)
         {
             _panel.Children.Remove(m_piece);
+        }
+        public bool IsOnDisplay(Panel _panel)
+        {
+            return _panel.Children.Contains(m_piece);
         }
     }
 

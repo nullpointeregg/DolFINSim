@@ -137,13 +137,14 @@ namespace DolFINSim_junuver
             {
                 WidthText.Background = ColorTable[(int)ColorEnum.White];
                 HeightText.Background = ColorTable[(int)ColorEnum.White];
-                m_board
 
-                    = new Board(_width, _height, DisplayGrid.Children
+                Panel _panel = DisplayGrid.Children
                     .Cast<Panel>()
-                    .First(element => System.Windows.Controls.Grid.GetRow(element) == 0));
+                    .First(element => System.Windows.Controls.Grid.GetRow(element) == 0);
+                m_board
+                    = new Board(_width, _height, _panel);
                 m_playerCalculationPolicy = new PlayerCalculationPolicy(_playerNum, _moveNum);
-                m_forbiddenMovePolicy = new ForbiddenMovePolicy(_width, _height, ForbiddenMovePolicyEnum.Outside, ForbiddenMovePolicyEnum.Ko, ForbiddenMovePolicyEnum.Suicide);
+                m_forbiddenMovePolicy = new ForbiddenMovePolicy(_width, _height, _panel, ForbiddenMovePolicyEnum.Outside, ForbiddenMovePolicyEnum.Overlay, ForbiddenMovePolicyEnum.Ko, ForbiddenMovePolicyEnum.Suicide);
 
                 DrawCurrentBoard();
                 m_board.UpdateLabels(m_playerCalculationPolicy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);

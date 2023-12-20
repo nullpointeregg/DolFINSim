@@ -173,17 +173,6 @@ namespace DolFINSim_junuver
 
             m_currentMoveIndex = _index;
         }
-        private void Remove(Stone _stone)
-        {
-            _stone.Destroy(m_panel);
-            m_stones.Remove(_stone);
-        }
-        private void RemoveAt(int _index)
-        {
-            Stone _stone = m_stones[_index];
-            _stone.Destroy(m_panel);
-            m_stones.RemoveAt(_index);
-        }
         private void Draw9Points()
         {
             for (int i = 0; i < 3; i++)

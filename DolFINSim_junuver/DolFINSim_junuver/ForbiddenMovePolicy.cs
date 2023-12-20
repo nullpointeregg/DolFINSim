@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace DolFINSim_junuver
 {
@@ -23,13 +24,15 @@ namespace DolFINSim_junuver
             new IntegerVector2(-1, 1)   // bottom right
         };
 
-        private int m_width;
-        private int m_height;
-        Func<Player, IntegerVector2, Stone[], bool>[] m_forbiddenMoveFuncs;
-        public ForbiddenMovePolicy(int _width, int _height, params ForbiddenMovePolicyEnum[] _forbiddens)
+        private readonly int m_width;
+        private readonly int m_height;
+        private readonly Panel m_panel;
+        private readonly Func<Player, IntegerVector2, Stone[], bool>[] m_forbiddenMoveFuncs;
+        public ForbiddenMovePolicy(int _width, int _height, Panel _panel, params ForbiddenMovePolicyEnum[] _forbiddens)
         {
             m_width = _width;
             m_height = _height;
+            m_panel = _panel;
 
             var _forbiddenMoveFuncList = new List<Func<Player, IntegerVector2, Stone[], bool>>();
             for (int i = 0; i < _forbiddens.Length; i++)
@@ -56,7 +59,7 @@ namespace DolFINSim_junuver
             }
 
             if (_forbiddenMoveFuncList.Count == 0)
-                _forbiddenMoveFuncList.Add(ReturnsTrue);
+                _forbiddenMoveFuncList.Add(ReturnsFalse);
 
             m_forbiddenMoveFuncs = _forbiddenMoveFuncList.ToArray();
         }
@@ -67,27 +70,28 @@ namespace DolFINSim_junuver
         }
         private bool IsOutside(Player _player, IntegerVector2 _position, Stone[] _placedStones)
         {
-            return _position.X >= 0 && _position.X < m_width && _position.Y >= 0 && _position.Y < m_height;
+            return _position.X < 0 || _position.X >= m_width || _position.Y < 0 || _position.Y >= m_height;
         }
         private bool IsOverlay(Player _player, IntegerVector2 _position, Stone[] _placedStones)
         {
-            return _position.X >= 0 && _position.X < m_width && _position.Y >= 0 && _position.Y < m_height;
+            Player[][] _playerMap = GetInitializedPlayerArray(_placedStones);
+            return _playerMap[_position.Y][_position.X] != Player.None;
         }
         private bool IsKo(Player _player, IntegerVector2 _position, Stone[] _placedStones)
         {
-            return _position.X >= 0 && _position.X < m_width && _position.Y >= 0 && _position.Y < m_height;
+            return false;
         }
         private bool IsSuicide(Player _player, IntegerVector2 _position, Stone[] _placedStones)
         {
-            return _position.X >= 0 && _position.X < m_width && _position.Y >= 0 && _position.Y < m_height;
+            return false;
         }
         private bool IsRenzu(Player _player, IntegerVector2 _position, Stone[] _placedStones)
         {
-            return _position.X >= 0 && _position.X < m_width && _position.Y >= 0 && _position.Y < m_height;
+            return false;
         }
-        private bool ReturnsTrue(Player _player, IntegerVector2 _position, Stone[] _placedStones)
+        private bool ReturnsFalse(Player _player, IntegerVector2 _position, Stone[] _placedStones)
         {
-            return true;
+            return false;
         }
         private IntegerVector2[] FindDead(Player _enemy, IntegerVector2 _position, Stone[] _placedStones)
         {
