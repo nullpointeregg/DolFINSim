@@ -15,46 +15,25 @@ namespace DolFINSim_junuver
         private readonly IntegerVector2 m_indexPosition;
         private readonly Player m_player;
         private readonly Ellipse m_piece;
-        private readonly Panel m_panel;
         public Stone(IntegerVector2 _position, Player _player, Ellipse piece, Panel panel)
         {
             m_indexPosition = _position;
             m_player = _player;
             m_piece = piece;
-            m_panel = panel;
-
-            Display();
         }
+
         public void PlaceStone(in Player[][] _grid)
         {
             _grid[m_indexPosition.Y][m_indexPosition.X] = m_player;
         }
-        public void Display()
+        public void Display(Panel _panel)
         {
-            m_panel.Children.Add(m_piece);
-
+            _panel.Children.Add(m_piece);
         }
-        public void Destroy()
+        public void Destroy(Panel _panel)
         {
-            m_panel.Children.Remove(m_piece);
+            _panel.Children.Remove(m_piece);
         }
-        /*
-        private Ellipse GetEllipse(IntegerVector2 _position, float _factor, SolidColorBrush _fillColor, SolidColorBrush _strokeColor)
-        {
-            Ellipse _piece = new Ellipse
-            {
-                Width = m_cellSideLength * _factor,
-                Height = m_cellSideLength * _factor,
-                Fill = _fillColor,
-                Stroke = _strokeColor
-            };
-            Point _point = GetPoint(_position, false);
-            Canvas.SetLeft(_piece, _point.X - m_cellSideLength * _factor / 2);
-            Canvas.SetTop(_piece, _point.Y - m_cellSideLength * _factor / 2);
-
-            return _piece;
-        }
-        */
     }
 
     public enum Player

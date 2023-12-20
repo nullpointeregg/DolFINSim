@@ -25,17 +25,11 @@ namespace DolFINSim_junuver
             new SolidColorBrush(Colors.Yellow)
         };
 
-        private readonly List<Stone> m_stones;
-        private readonly Panel m_panel;
+        private int m_currentMoveIndex;
         private double m_cellSideLength;
         private Point m_pivot;
-
-        public Board(int _width, int _height, Panel _panel) : base(_width, _height)
-        {
-            m_stones = new List<Stone>();
-            m_panel = _panel;
-        }
-
+        private readonly List<Stone> m_stones;
+        private readonly Panel m_panel;
 
         public void Place(Point _rawPoint, PlayerCalculationPolicy _policy)
         {
@@ -43,19 +37,23 @@ namespace DolFINSim_junuver
             if (_rounded.X == -1 || _rounded.Y == -1)
                 return;
             Player _nextPlayer = _policy.GetPlayer(m_stones.Count());
-            m_stones.Add(new Stone(_rounded, _nextPlayer, GetEllipse(_rounded, 1.0f, ColorTable[(int)_nextPlayer], ColorTable[0]), m_panel));
+            Stone _stone = new Stone(_rounded, _nextPlayer, GetEllipse(_rounded, 1.0f, ColorTable[(int)_nextPlayer], ColorTable[0]), m_panel);
+            _stone.Display(m_panel);
+            m_stones.Add(_stone);
         }
         public void Remove(Stone _stone)
         {
+            _stone.Destroy(m_panel);
             m_stones.Remove(_stone);
         }
         public void RemoveAt(int _index)
         {
+            Stone _stone = m_stones[_index];
+            _stone.Destroy(m_panel);
             m_stones.RemoveAt(_index);
         }
         public void DrawBoard()
         {
-            UpdatePivot();
             Rectangle _boardRect = new Rectangle
             {
                 Width = m_panel.ActualWidth,
@@ -150,16 +148,6 @@ namespace DolFINSim_junuver
                 }
             }
         }
-        private void UpdatePivot()
-        {
-            m_cellSideLength = Math.Min(m_panel.ActualWidth / (Width + 2), m_panel.ActualHeight / (Height + 2));
-            double _gridWidth = m_cellSideLength * (Width - 1);
-            double _gridHeight = m_cellSideLength * (Height - 1);
-
-            double m_pivotX = (m_panel.ActualWidth - _gridWidth) / 2;
-            double m_pivotY = (m_panel.ActualHeight - _gridHeight) / 2;
-            m_pivot = new Point(m_pivotX, m_pivotY);
-        }
         private Ellipse GetEllipse(IntegerVector2 _position, float _factor, SolidColorBrush _fillColor, SolidColorBrush _strokeColor)
         {
             Ellipse _piece = new Ellipse
@@ -174,6 +162,29 @@ namespace DolFINSim_junuver
             Canvas.SetTop(_piece, _point.Y - m_cellSideLength * _factor / 2);
 
             return _piece;
+        }
+        private double GetCellSideLength(Panel _panel)
+        {
+            return Math.Min(_panel.ActualWidth / (Width + 2), _panel.ActualHeight / (Height + 2));
+        }
+        private Point GetPivot(double _cellSideLength, Panel _panel)
+        {
+            double _gridWidth = _cellSideLength * (Width - 1);
+            double _gridHeight = _cellSideLength * (Height - 1);
+
+            double _pivotX = (_panel.ActualWidth - _gridWidth) / 2;
+            double _pivotY = (_panel.ActualHeight - _gridHeight) / 2;
+            return new Point(_pivotX, _pivotY);
+        }
+        public Board(int _width, int _height, List<Stone> _stones, Panel _panel) : this(_width, _height, _panel)
+        {
+            m_stones = _stones;
+        }
+        public Board(int _width, int _height, Panel _panel) : base(_width, _height)
+        {
+            m_cellSideLength = GetCellSideLength(_panel);
+            m_pivot = GetPivot(m_cellSideLength, _panel);
+            m_panel = _panel;
         }
     }
 }
