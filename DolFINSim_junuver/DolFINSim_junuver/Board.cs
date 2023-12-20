@@ -32,12 +32,12 @@ namespace DolFINSim_junuver
         private readonly Panel m_panel;
 
         #region Public Methods
-        public void PlaceNew(Point _rawPoint, PlayerCalculationPolicy _policy)
+        public void PlaceNew(Point _rawPoint, PlayerCalculationPolicy _calcPolicy, ForbiddenMovePolicy _forbPolicy)
         {
             IntegerVector2 _rounded = GetRoundedIndex(_rawPoint);
-            if (_rounded.X <= -1 || _rounded.Y <= -1)
+            Player _nextPlayer = _calcPolicy.GetPlayer(m_stones.Count());
+            if (_forbPolicy.IsForbidden(_nextPlayer, _rounded, m_stones.ToArray()))
                 return;
-            Player _nextPlayer = _policy.GetPlayer(m_stones.Count());
             Stone _stone = new Stone(_rounded, _nextPlayer, GetEllipse(m_cellSideLength, _rounded, 1.0f, ColorTable[(int)_nextPlayer], ColorTable[0]));
 
             m_stones.Add(_stone);
