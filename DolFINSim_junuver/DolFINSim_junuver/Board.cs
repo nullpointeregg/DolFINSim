@@ -31,6 +31,7 @@ namespace DolFINSim_junuver
         private readonly List<Stone> m_stones;
         private readonly Panel m_panel;
 
+        #region Public Methods
         public void PlaceNew(Point _rawPoint, PlayerCalculationPolicy _policy)
         {
             IntegerVector2 _rounded = GetRoundedIndex(_rawPoint);
@@ -43,36 +44,10 @@ namespace DolFINSim_junuver
             m_stones.Add(_stone);
             m_currentMoveIndex = m_stones.Count;
         }
-        public void DisplayTo(int _index)
-        {
-            if (_index >= m_stones.Count)
-                return;
 
-            for (int i = 0; i < _index; i++)
-            {
-                m_stones[i].Display(m_panel);
-            }
-            for (int i = _index; i < m_stones.Count; i++)
-            {
-                m_stones[i].Destroy(m_panel);
-            }
-
-            m_currentMoveIndex = _index;
-        }
         public void Place(Stone _stone)
         {
             _stone.Display(m_panel);
-        }
-        public void Remove(Stone _stone)
-        {
-            _stone.Destroy(m_panel);
-            m_stones.Remove(_stone);
-        }
-        public void RemoveAt(int _index)
-        {
-            Stone _stone = m_stones[_index];
-            _stone.Destroy(m_panel);
-            m_stones.RemoveAt(_index);
         }
         public void DrawBoard()
         {
@@ -159,6 +134,34 @@ namespace DolFINSim_junuver
 
             return new IntegerVector2(_indexX - 1, Height - _indexY);
         }
+        #endregion
+        private void DisplayTo(int _index)
+        {
+            if (_index >= m_stones.Count)
+                return;
+
+            for (int i = 0; i < _index; i++)
+            {
+                m_stones[i].Display(m_panel);
+            }
+            for (int i = _index; i < m_stones.Count; i++)
+            {
+                m_stones[i].Destroy(m_panel);
+            }
+
+            m_currentMoveIndex = _index;
+        }
+        private void Remove(Stone _stone)
+        {
+            _stone.Destroy(m_panel);
+            m_stones.Remove(_stone);
+        }
+        private void RemoveAt(int _index)
+        {
+            Stone _stone = m_stones[_index];
+            _stone.Destroy(m_panel);
+            m_stones.RemoveAt(_index);
+        }
         private void Draw9Points()
         {
             for (int i = 0; i < 3; i++)
@@ -204,6 +207,7 @@ namespace DolFINSim_junuver
         }
         public Board(int _width, int _height, Panel _panel) : base(_width, _height)
         {
+            m_stones = new List<Stone>();
             m_cellSideLength = GetCellSideLength(_panel);
             m_pivot = GetPivot(m_cellSideLength, _panel);
             m_panel = _panel;
