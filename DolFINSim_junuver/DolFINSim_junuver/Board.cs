@@ -38,7 +38,7 @@ namespace DolFINSim_junuver
             if (_rounded.X == -1 || _rounded.Y == -1)
                 return;
             Player _nextPlayer = _policy.GetPlayer(m_stones.Count());
-            Stone _stone = new Stone(_rounded, _nextPlayer, GetEllipse(_rounded, 1.0f, ColorTable[(int)_nextPlayer], ColorTable[0]), m_panel);
+            Stone _stone = new Stone(_rounded, _nextPlayer, GetEllipse(m_cellSideLength, _rounded, 1.0f, ColorTable[(int)_nextPlayer], ColorTable[0]));
             _stone.Display(m_panel);
 
             m_stones.Add(_stone);
@@ -99,6 +99,9 @@ namespace DolFINSim_junuver
 
             if (Width == 19 && Height == 19)
                 Draw9Points();
+
+            //Drawing Stones
+            DisplayTo(m_stones.Count);
         }
         public Point GetPoint(IntegerVector2 _position,  bool _isForStone)
         {
@@ -173,23 +176,23 @@ namespace DolFINSim_junuver
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    Ellipse _circle = GetEllipse(new IntegerVector2(3 + 6 * j, 3 + 6 * i), 0.3333333f, ColorTable[(int)ColorEnum.Black], ColorTable[(int)ColorEnum.Black]);
+                    Ellipse _circle = GetEllipse(m_cellSideLength, new IntegerVector2(3 + 6 * j, 3 + 6 * i), 0.3333333f, ColorTable[(int)ColorEnum.Black], ColorTable[(int)ColorEnum.Black]);
                     m_panel.Children.Add(_circle);
                 }
             }
         }
-        private Ellipse GetEllipse(IntegerVector2 _position, float _factor, SolidColorBrush _fillColor, SolidColorBrush _strokeColor)
+        private Ellipse GetEllipse(double _cellSideLength, IntegerVector2 _position, float _factor, SolidColorBrush _fillColor, SolidColorBrush _strokeColor)
         {
             Ellipse _piece = new Ellipse
             {
-                Width = m_cellSideLength * _factor,
-                Height = m_cellSideLength * _factor,
+                Width = _cellSideLength * _factor,
+                Height = _cellSideLength * _factor,
                 Fill = _fillColor,
                 Stroke = _strokeColor
             };
             Point _point = GetPoint(_position, false);
-            Canvas.SetLeft(_piece, _point.X - m_cellSideLength * _factor / 2);
-            Canvas.SetTop(_piece, _point.Y - m_cellSideLength * _factor / 2);
+            Canvas.SetLeft(_piece, _point.X - _cellSideLength * _factor / 2);
+            Canvas.SetTop(_piece, _point.Y - _cellSideLength * _factor / 2);
 
             return _piece;
         }
@@ -206,9 +209,19 @@ namespace DolFINSim_junuver
             double _pivotY = (_panel.ActualHeight - _gridHeight) / 2;
             return new Point(_pivotX, _pivotY);
         }
-        public Board(int _width, int _height, List<Stone> _stones, Panel _panel) : this(_width, _height, _panel)
+        public Board(Board _board, Panel _panel) : this(_board.Width, _board.Height, _board.m_stones, _panel)
         {
-            m_stones = _stones;
+
+        }
+        public Board(int _width, int _height, List<Stone> _previousStones, Panel _panel) : this(_width, _height, _panel)
+        {
+            List<Stone> _newStones = new List<Stone>();
+            for (int i = 0; i < _previousStones.Count; i++)
+            {
+                _newStones.Add(new Stone(_previousStones[i], (IntegerVector2 _position, SolidColorBrush _fillColor) 
+                    => GetEllipse(GetCellSideLength(_panel), _position, 1.0f, _fillColor, ColorTable[(int)ColorEnum.Black])));
+            }
+            m_stones = _newStones;
         }
         public Board(int _width, int _height, Panel _panel) : base(_width, _height)
         {

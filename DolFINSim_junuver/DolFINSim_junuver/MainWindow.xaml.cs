@@ -133,6 +133,9 @@ namespace DolFINSim_junuver
         private void OnClickFitButton(object sender, RoutedEventArgs e)
         {
             ClearCanvas();
+            m_board = new Board(m_board, DisplayGrid.Children
+                .Cast<Panel>()
+                .First(element => System.Windows.Controls.Grid.GetRow(element) == 0));
             m_board.DrawBoard();
         }
         private void OnCheckActivate(object sender, RoutedEventArgs e) { }
