@@ -1,0 +1,16 @@
+D:\backup\github\DolFINSim\DolFINSim_junuver\DolFINSim_junuver\obj\Debug\DolFINSim_junuver.csproj.AssemblyReference.cache
+D:\backup\github\DolFINSim\DolFINSim_junuver\DolFINSim_junuver\obj\Debug\DolFINSim_junuver.csproj.SuggestedBindingRedirects.cache
+D:\backup\github\DolFINSim\DolFINSim_junuver\DolFINSim_junuver\obj\Debug\MainWindow.g.cs
+D:\backup\github\DolFINSim\DolFINSim_junuver\DolFINSim_junuver\obj\Debug\App.g.cs
+D:\backup\github\DolFINSim\DolFINSim_junuver\DolFINSim_junuver\obj\Debug\DolFINSim_junuver_MarkupCompile.cache
+D:\backup\github\DolFINSim\DolFINSim_junuver\DolFINSim_junuver\obj\Debug\DolFINSim_junuver_MarkupCompile.lref
+D:\backup\github\DolFINSim\DolFINSim_junuver\DolFINSim_junuver\bin\Debug\DolFINSim_junuver.exe.config
+D:\backup\github\DolFINSim\DolFINSim_junuver\DolFINSim_junuver\bin\Debug\DolFINSim_junuver.exe
+D:\backup\github\DolFINSim\DolFINSim_junuver\DolFINSim_junuver\bin\Debug\DolFINSim_junuver.pdb
+D:\backup\github\DolFINSim\DolFINSim_junuver\DolFINSim_junuver\obj\Debug\MainWindow.baml
+D:\backup\github\DolFINSim\DolFINSim_junuver\DolFINSim_junuver\obj\Debug\DolFINSim_junuver.g.resources
+D:\backup\github\DolFINSim\DolFINSim_junuver\DolFINSim_junuver\obj\Debug\DolFINSim_junuver.Properties.Resources.resources
+D:\backup\github\DolFINSim\DolFINSim_junuver\DolFINSim_junuver\obj\Debug\DolFINSim_junuver.csproj.GenerateResource.cache
+D:\backup\github\DolFINSim\DolFINSim_junuver\DolFINSim_junuver\obj\Debug\DolFINSim_junuver.csproj.CoreCompileInputs.cache
+D:\backup\github\DolFINSim\DolFINSim_junuver\DolFINSim_junuver\obj\Debug\DolFINSim_junuver.exe
+D:\backup\github\DolFINSim\DolFINSim_junuver\DolFINSim_junuver\obj\Debug\DolFINSim_junuver.pdb
