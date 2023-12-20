@@ -33,7 +33,8 @@ namespace DolFINSim_junuver
             new SolidColorBrush(Colors.Yellow)
         };
         private Board m_board;
-        private PlayerCalculationPolicy m_policy;
+        private PlayerCalculationPolicy m_playerCalculationPolicy;
+        private ForbiddenMovePolicy m_forbiddenMovePolicy;
 
         public MainWindow()
         {
@@ -45,44 +46,44 @@ namespace DolFINSim_junuver
                 .Cast<Panel>()
                 .First(element => System.Windows.Controls.Grid.GetRow(element) == 0));
             DrawCurrentBoard();
-            m_policy = new PlayerCalculationPolicy(2, 1);
+            m_playerCalculationPolicy = new PlayerCalculationPolicy(2, 1);
         }
 
         #region Interactive Methods
         private void CanvasOnMouseDown(object sender, MouseEventArgs e)
         {
-            m_board.PlaceNew(e.GetPosition(this), m_policy);
-            m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+            m_board.PlaceNew(e.GetPosition(this), m_playerCalculationPolicy, m_forbiddenMovePolicy);
+            m_board.UpdateLabels(m_playerCalculationPolicy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
         }
         private void OnClickFirstMoveButton(object sender, RoutedEventArgs e)
         {
             m_board.ShowFromCurrentIndex(-20050906);
-            m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+            m_board.UpdateLabels(m_playerCalculationPolicy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
         }
         private void OnClickBackward10Button(object sender, RoutedEventArgs e)
         {
             m_board.ShowFromCurrentIndex(-10);
-            m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+            m_board.UpdateLabels(m_playerCalculationPolicy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
         }
         private void OnClickBackwardButton(object sender, RoutedEventArgs e)
         {
             m_board.ShowFromCurrentIndex(-1);
-            m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+            m_board.UpdateLabels(m_playerCalculationPolicy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
         }
         private void OnClickForward10Button(object sender, RoutedEventArgs e)
         {
             m_board.ShowFromCurrentIndex(10);
-            m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+            m_board.UpdateLabels(m_playerCalculationPolicy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
         }
         private void OnClickLastMoveButton(object sender, RoutedEventArgs e)
         {
             m_board.ShowFromCurrentIndex(20050906);
-            m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+            m_board.UpdateLabels(m_playerCalculationPolicy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
         }
         private void OnClickForwardButton(object sender, RoutedEventArgs e)
         {
             m_board.ShowFromCurrentIndex(1);
-            m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+            m_board.UpdateLabels(m_playerCalculationPolicy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
         }
         private void OnClickNewButton(object sender, RoutedEventArgs e)
         {
@@ -141,10 +142,11 @@ namespace DolFINSim_junuver
                     = new Board(_width, _height, DisplayGrid.Children
                     .Cast<Panel>()
                     .First(element => System.Windows.Controls.Grid.GetRow(element) == 0));
-                m_policy = new PlayerCalculationPolicy(_playerNum, _moveNum);
+                m_playerCalculationPolicy = new PlayerCalculationPolicy(_playerNum, _moveNum);
+                m_forbiddenMovePolicy = new ForbiddenMovePolicy(_width, _height, ForbiddenMovePolicyEnum.Outside, ForbiddenMovePolicyEnum.Ko, ForbiddenMovePolicyEnum.Suicide);
 
                 DrawCurrentBoard();
-                m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+                m_board.UpdateLabels(m_playerCalculationPolicy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
             }
         }
         private void OnClickFitButton(object sender, RoutedEventArgs e)
