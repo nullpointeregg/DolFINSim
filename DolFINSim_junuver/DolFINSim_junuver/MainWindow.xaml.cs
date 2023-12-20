@@ -52,22 +52,27 @@ namespace DolFINSim_junuver
         private void CanvasOnMouseDown(object sender, MouseEventArgs e)
         {
             m_board.PlaceNew(e.GetPosition(this), m_policy);
+            m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
         }
         private void OnClickBackward10Button(object sender, RoutedEventArgs e)
         {
             m_board.ShowFromCurrentIndex(-10);
+            m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
         }
         private void OnClickBackwardButton(object sender, RoutedEventArgs e)
         {
             m_board.ShowFromCurrentIndex(-1);
+            m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
         }
         private void OnClickForward10Button(object sender, RoutedEventArgs e)
         {
             m_board.ShowFromCurrentIndex(10);
+            m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
         }
         private void OnClickForwardButton(object sender, RoutedEventArgs e)
         {
             m_board.ShowFromCurrentIndex(1);
+            m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
         }
         private void OnClickNewButton(object sender, RoutedEventArgs e)
         {
@@ -126,8 +131,10 @@ namespace DolFINSim_junuver
                     = new Board(_width, _height, DisplayGrid.Children
                     .Cast<Panel>()
                     .First(element => System.Windows.Controls.Grid.GetRow(element) == 0));
-                DrawCurrentBoard();
                 m_policy = new PlayerCalculationPolicy(_playerNum, _moveNum);
+
+                DrawCurrentBoard();
+                m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
             }
         }
         private void OnClickFitButton(object sender, RoutedEventArgs e)

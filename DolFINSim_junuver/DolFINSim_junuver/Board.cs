@@ -26,8 +26,8 @@ namespace DolFINSim_junuver
         };
 
         private int m_currentMoveIndex = 0;
-        private double m_cellSideLength;
-        private Point m_pivot;
+        private readonly double m_cellSideLength;
+        private readonly Point m_pivot;
         private readonly List<Stone> m_stones;
         private readonly Panel m_panel;
 
@@ -102,6 +102,20 @@ namespace DolFINSim_junuver
 
             //Drawing Stones
             DisplayTo(m_stones.Count);
+        }
+        public void UpdateLabels(PlayerCalculationPolicy _policy, params TextBlock[] _textBlocks)
+        {
+            for (int i = 0; i < _textBlocks.Length; i++)
+            {
+                if (m_currentMoveIndex + i > Width * Height)
+                    _textBlocks[i].Text = "";
+                else
+                {
+                    Player _player = _policy.GetPlayer(m_currentMoveIndex + i);
+                    _textBlocks[i].Text = $"{m_currentMoveIndex + i + 1}. {_player}";
+                    _textBlocks[i].Foreground = ColorTable[(int)_player];
+                }
+            }
         }
         public Point GetPoint(IntegerVector2 _position,  bool _isForStone)
         {
