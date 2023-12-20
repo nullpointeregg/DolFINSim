@@ -41,6 +41,8 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="Backward10Button"
                         Content="&lt;&lt;"
@@ -49,7 +51,7 @@
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
                         Click="OnClickBackward10Button"
-                        Grid.Column="0"></Button>
+                        Grid.Column="1"></Button>
                     <Button x:Name="BackwardButton"
                         Content="&lt;"
                         FontSize="30"
@@ -57,7 +59,7 @@
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
                         Click="OnClickBackwardButton"
-                        Grid.Column="1"></Button>
+                        Grid.Column="2"></Button>
                     <Button x:Name="ForwardButton"
                         Content="&gt;"
                         FontSize="30"
@@ -65,7 +67,7 @@
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
                         Click="OnClickForwardButton"
-                        Grid.Column="2"></Button>
+                        Grid.Column="3"></Button>
                     <Button x:Name="Forward10Button"
                         Content="&gt;&gt;"
                         FontSize="30"
@@ -73,7 +75,7 @@
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
                         Click="OnClickForward10Button"
-                        Grid.Column="3"></Button>
+                        Grid.Column="4"></Button>
                 </Grid>
                 <TextBlock Text="Your Turn:"
                        FontFamily="Times New Roman"

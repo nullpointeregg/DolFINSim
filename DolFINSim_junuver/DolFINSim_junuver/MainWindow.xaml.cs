@@ -51,7 +51,7 @@ namespace DolFINSim_junuver
         #region Interactive Methods
         private void CanvasOnMouseDown(object sender, MouseEventArgs e)
         {
-            m_board.Place(e.GetPosition(this), m_policy);
+            m_board.PlaceNew(e.GetPosition(this), m_policy);
         }
         private void OnClickBackward10Button(object sender, RoutedEventArgs e)
         {
@@ -126,7 +126,6 @@ namespace DolFINSim_junuver
                     .Cast<Panel>()
                     .First(element => System.Windows.Controls.Grid.GetRow(element) == 0));
                 DrawCurrentBoard();
-
                 m_policy = new PlayerCalculationPolicy(_playerNum, _moveNum);
             }
         }

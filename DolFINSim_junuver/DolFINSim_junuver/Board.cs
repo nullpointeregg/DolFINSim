@@ -25,13 +25,13 @@ namespace DolFINSim_junuver
             new SolidColorBrush(Colors.Yellow)
         };
 
-        private int m_currentMoveIndex;
+        private int m_currentMoveIndex = 0;
         private double m_cellSideLength;
         private Point m_pivot;
         private readonly List<Stone> m_stones;
         private readonly Panel m_panel;
 
-        public void Place(Point _rawPoint, PlayerCalculationPolicy _policy)
+        public void PlaceNew(Point _rawPoint, PlayerCalculationPolicy _policy)
         {
             IntegerVector2 _rounded = GetRoundedIndex(_rawPoint);
             if (_rounded.X == -1 || _rounded.Y == -1)
@@ -39,7 +39,29 @@ namespace DolFINSim_junuver
             Player _nextPlayer = _policy.GetPlayer(m_stones.Count());
             Stone _stone = new Stone(_rounded, _nextPlayer, GetEllipse(_rounded, 1.0f, ColorTable[(int)_nextPlayer], ColorTable[0]), m_panel);
             _stone.Display(m_panel);
+
             m_stones.Add(_stone);
+            m_currentMoveIndex = m_stones.Count;
+        }
+        public void DisplayTo(int _index)
+        {
+            if (_index >= m_stones.Count)
+                return;
+
+            for (int i = 0; i < _index; i++)
+            {
+                m_stones[i].Display(m_panel);
+            }
+            for (int i = _index; i < m_stones.Count; i++)
+            {
+                m_stones[i].Destroy(m_panel);
+            }
+
+            m_currentMoveIndex = _index;
+        }
+        public void Place(Stone _stone)
+        {
+            _stone.Display(m_panel);
         }
         public void Remove(Stone _stone)
         {
