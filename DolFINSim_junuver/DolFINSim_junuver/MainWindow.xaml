@@ -44,6 +44,14 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
+                    <Button x:Name="FirstMoveButton"
+                        Content="First"
+                        FontSize="30"
+                        FontWeight="Bold"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch"
+                        Click="OnClickFirstMoveButton"
+                        Grid.Column="0"></Button>
                     <Button x:Name="Backward10Button"
                         Content="&lt;&lt;"
                         FontSize="30"
@@ -76,6 +84,14 @@
                         HorizontalAlignment="Stretch"
                         Click="OnClickForward10Button"
                         Grid.Column="4"></Button>
+                    <Button x:Name="LastMoveButton"
+                        Content="Last"
+                        FontSize="30"
+                        FontWeight="Bold"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch"
+                        Click="OnClickLastMoveButton"
+                        Grid.Column="6"></Button>
                 </Grid>
                 <TextBlock Text="Your Turn:"
                        FontFamily="Times New Roman"

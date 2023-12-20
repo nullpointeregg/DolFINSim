@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ColorEnum.cs" />
+    <Compile Include="ForbiddenMovePolicy.cs" />
     <Compile Include="Stone.cs" />
     <Compile Include="Vector2.cs" />
     <Page Include="MainWindow.xaml">

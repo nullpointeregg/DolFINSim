@@ -35,13 +35,13 @@ namespace DolFINSim_junuver
         public void PlaceNew(Point _rawPoint, PlayerCalculationPolicy _policy)
         {
             IntegerVector2 _rounded = GetRoundedIndex(_rawPoint);
-            if (_rounded.X == -1 || _rounded.Y == -1)
+            if (_rounded.X <= -1 || _rounded.Y <= -1)
                 return;
             Player _nextPlayer = _policy.GetPlayer(m_stones.Count());
             Stone _stone = new Stone(_rounded, _nextPlayer, GetEllipse(m_cellSideLength, _rounded, 1.0f, ColorTable[(int)_nextPlayer], ColorTable[0]));
-            _stone.Display(m_panel);
 
             m_stones.Add(_stone);
+            _stone.Display(m_panel);
             m_currentMoveIndex = m_stones.Count;
         }
         public void ShowFromCurrentIndex(int _difference)
@@ -107,7 +107,7 @@ namespace DolFINSim_junuver
         {
             for (int i = 0; i < _textBlocks.Length; i++)
             {
-                if (m_currentMoveIndex + i > Width * Height)
+                if (m_currentMoveIndex + i >= Width * Height)
                     _textBlocks[i].Text = "";
                 else
                 {
@@ -117,17 +117,17 @@ namespace DolFINSim_junuver
                 }
             }
         }
-        public Point GetPoint(IntegerVector2 _position,  bool _isForStone)
+        private Point GetPoint(IntegerVector2 _position,  bool _isForStone)
         {
             return new Point(m_pivot.X + m_cellSideLength * _position.X - (_isForStone ? m_cellSideLength / 2 : 0),
                 m_pivot.Y + m_cellSideLength * (Height - _position.Y - 1) - (_isForStone ? m_cellSideLength / 2 : 0));
         }
-        public IntegerVector2 GetRoundedIndex(Point _rawPoint)
+        private IntegerVector2 GetRoundedIndex(Point _rawPoint)
         {
             double _xLeftLimit = m_pivot.X - m_cellSideLength / 2;
-            double _xRightLimit = m_pivot.X + m_cellSideLength * (Width * 2 + 1) / 2;
+            double _xRightLimit = m_pivot.X + m_cellSideLength * (Width * 2 - 1) / 2;
             double _yTopLimit = m_pivot.Y - m_cellSideLength / 2;
-            double _yBottomLimit = m_pivot.Y + m_cellSideLength * (Height * 2 + 1) / 2;
+            double _yBottomLimit = m_pivot.Y + m_cellSideLength * (Height * 2 - 1) / 2;
 
             if (_rawPoint.X < _xLeftLimit ||
                 _rawPoint.X > _xRightLimit ||

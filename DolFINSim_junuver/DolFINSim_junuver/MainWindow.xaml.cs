@@ -54,6 +54,11 @@ namespace DolFINSim_junuver
             m_board.PlaceNew(e.GetPosition(this), m_policy);
             m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
         }
+        private void OnClickFirstMoveButton(object sender, RoutedEventArgs e)
+        {
+            m_board.ShowFromCurrentIndex(-20050906);
+            m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+        }
         private void OnClickBackward10Button(object sender, RoutedEventArgs e)
         {
             m_board.ShowFromCurrentIndex(-10);
@@ -67,6 +72,11 @@ namespace DolFINSim_junuver
         private void OnClickForward10Button(object sender, RoutedEventArgs e)
         {
             m_board.ShowFromCurrentIndex(10);
+            m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+        }
+        private void OnClickLastMoveButton(object sender, RoutedEventArgs e)
+        {
+            m_board.ShowFromCurrentIndex(20050906);
             m_board.UpdateLabels(m_policy, FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
         }
         private void OnClickForwardButton(object sender, RoutedEventArgs e)
