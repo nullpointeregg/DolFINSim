@@ -44,10 +44,15 @@ namespace DolFINSim_junuver
             m_stones.Add(_stone);
             m_currentMoveIndex = m_stones.Count;
         }
-
-        public void Place(Stone _stone)
+        public void ShowFromCurrentIndex(int _difference)
         {
-            _stone.Display(m_panel);
+            int _index = m_currentMoveIndex + _difference;
+            if (_index < 0) 
+                _index = 0;
+            if (_index > m_stones.Count)
+                _index = m_stones.Count;
+
+            DisplayTo(_index);
         }
         public void DrawBoard()
         {
@@ -137,7 +142,7 @@ namespace DolFINSim_junuver
         #endregion
         private void DisplayTo(int _index)
         {
-            if (_index >= m_stones.Count)
+            if (_index > m_stones.Count || _index < 0)
                 return;
 
             for (int i = 0; i < _index; i++)

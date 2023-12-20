@@ -55,18 +55,19 @@ namespace DolFINSim_junuver
         }
         private void OnClickBackward10Button(object sender, RoutedEventArgs e)
         {
-
+            m_board.ShowFromCurrentIndex(-10);
         }
         private void OnClickBackwardButton(object sender, RoutedEventArgs e)
         {
-
+            m_board.ShowFromCurrentIndex(-1);
         }
         private void OnClickForward10Button(object sender, RoutedEventArgs e)
         {
-
+            m_board.ShowFromCurrentIndex(10);
         }
         private void OnClickForwardButton(object sender, RoutedEventArgs e)
         {
+            m_board.ShowFromCurrentIndex(1);
         }
         private void OnClickNewButton(object sender, RoutedEventArgs e)
         {
