@@ -42,7 +42,7 @@ namespace DolFINSim_junuver
             m_piece = _piece;
         }
 
-        public void PlaceStone(in Player[][] _grid, Panel m_panel = null)
+        public void PlaceStone(in Player[][] _grid, Panel m_panel)
         {
             if (m_panel == null)
             {

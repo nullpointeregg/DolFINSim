@@ -26,12 +26,14 @@ namespace DolFINSim_junuver
         
         private readonly int m_width;
         private readonly int m_height;
+        private readonly Panel m_panel;
         private readonly Func<Player, IntegerVector2, Stone[], IntegerVector2[]> m_boardUpdateFunc;
 
-        public BoardUpdatePolicy(int _width, int _height, Panel _panel,BoardUpdatePolicyEnum _boardUpdatePolicy)
+        public BoardUpdatePolicy(int _width, int _height, Panel _panel, BoardUpdatePolicyEnum _boardUpdatePolicy)
         {
             m_width = _width;
             m_height = _height;
+            m_panel = _panel;
 
             switch (_boardUpdatePolicy)
             {
@@ -234,7 +236,7 @@ namespace DolFINSim_junuver
                     _map[y][x] = Player.None;
                 }
             }
-            Array.ForEach(_placedStones, s => s.PlaceStone(_map));
+            Array.ForEach(_placedStones, s => s.PlaceStone(_map, m_panel));
             return _map;
         }
         private Status[][] GetInitializedOpponentStatusArray(Player _enemy, Player[][] _playerMap)

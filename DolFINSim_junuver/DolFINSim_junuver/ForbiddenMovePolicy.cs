@@ -167,7 +167,7 @@ namespace DolFINSim_junuver
                     _map[y][x] = Player.None;
                 }
             }
-            Array.ForEach(_placedStones, s => s.PlaceStone(_map));
+            Array.ForEach(_placedStones, s => s.PlaceStone(_map, m_panel));
             return _map;
         }
         private Status[][] GetInitializedplayerStatusArray(Player _player, Player[][] _playerMap)
