@@ -49,19 +49,27 @@ namespace DolFINSim_junuver
                 _grid[m_indexPosition.Y][m_indexPosition.X] = m_player;
                 return;
             }
-            if (IsOnDisplay(m_panel) || m_panel == null)
+            if (IsOnDisplay(m_panel))
                 _grid[m_indexPosition.Y][m_indexPosition.X] = m_player;
         }
-        public void Display(Panel _panel)
+        public void Display(Panel _panel, Func<Player, IntegerVector2, Stone[]> _findDeadFunc)
         {
             if (!IsOnDisplay(_panel))
+            {
                 _panel.Children.Add(m_piece);
+                Stone[] _deadStones = _findDeadFunc(m_player, m_indexPosition);
+                Array.ForEach(_deadStones, s => s.Destroy(_panel));
+            }
         }
         public void Destroy(Panel _panel)
         {
             _panel.Children.Remove(m_piece);
         }
-        public bool IsOnDisplay(Panel _panel)
+        public bool IsOnDisplay(IntegerVector2 _position, Panel _panel)
+        {
+            return _position == m_indexPosition && IsOnDisplay(_panel);
+        }
+        private bool IsOnDisplay(Panel _panel)
         {
             return _panel.Children.Contains(m_piece);
         }
