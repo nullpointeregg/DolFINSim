@@ -49,13 +49,17 @@ namespace DolFINSim_junuver
         }
         public void Display(Panel _panel)
         {
-            if (!_panel.Children.Contains(m_piece))
-                _panel.Children.Add(m_piece);
+            if (!IsOnDisplay(_panel))
+                _panel.Children.Add(m_piece);/*
+            else
+                throw new Exception("이미 돌이 놓인 상태에서 동일한 돌을 또 놓으려고 함!");*/
         }
         public void Destroy(Panel _panel)
         {
-            if (_panel.Children.Contains(m_piece))
-                _panel.Children.Remove(m_piece);
+            if (IsOnDisplay(_panel))
+                _panel.Children.Remove(m_piece);/*
+            else
+                throw new Exception("돌은 이미 제거됐는데 동일한 돌을 또 제거하려고 함!");*/
         }
         public Stone[] FindDead(Stone[] _placedStones, Policy _policy)
         {

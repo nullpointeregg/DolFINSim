@@ -190,7 +190,8 @@ namespace DolFINSim_junuver
         {
             if (_moveCount > m_stones.Count || _moveCount < 0)
                 return;
-
+            
+            ClearBoard();
             for (int i = 0; i < _moveCount; i++)
             {
                 Place(m_stones[i], i, false);
@@ -244,6 +245,10 @@ namespace DolFINSim_junuver
         private void TakeList(int _toIndex)
         {
             m_stones.RemoveRange(_toIndex, m_stones.Count - _toIndex);
+        }
+        private void ClearBoard()
+        {
+            m_stones.ForEach(s => s.Destroy(m_panel));
         }
         public Board(Board _board) : this(_board.Width, _board.Height, _board.m_stones, _board.m_panel, _board.m_policy)
         {
