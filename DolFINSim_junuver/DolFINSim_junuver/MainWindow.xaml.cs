@@ -168,14 +168,6 @@ namespace DolFINSim_junuver
         }
 
         // Please do NOT touch these methods. Pleeeeeeeeeasssssssss
-        private void Display(UIElement _element)
-        {
-            DisplayGrid.Children.Add(_element);
-        }
-        private void Destroy(UIElement _element)
-        {
-            MainCanvas.Children.Remove(_element);
-        }
         private void ClearCanvas()
         {
             MainCanvas.Children.Clear();

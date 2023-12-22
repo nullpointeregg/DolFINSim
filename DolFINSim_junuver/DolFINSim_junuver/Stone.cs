@@ -44,11 +44,6 @@ namespace DolFINSim_junuver
 
         public void PlaceStone(in Player[][] _grid, Panel m_panel)
         {
-            if (m_panel == null)
-            {
-                _grid[m_position.Y][m_position.X] = m_player;
-                return;
-            }
             if (IsOnDisplay(m_panel))
                 _grid[m_position.Y][m_position.X] = m_player;
         }
