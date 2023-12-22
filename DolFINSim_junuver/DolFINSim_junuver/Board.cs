@@ -37,17 +37,9 @@ namespace DolFINSim_junuver
         {
             IntegerVector2 _rounded = GetRoundedIndex(_rawPoint);
             Player _nextPlayer = m_policy.PlayerCalculationPolicy.GetPlayer(m_stones.Count());
-            if (m_policy.ForbiddenMovePolicy.IsForbidden(_nextPlayer, _rounded, m_stones.ToArray()))
-                return;
             TakeList(m_currentMoveIndex);
             Stone _stone = new Stone(_rounded, _nextPlayer, GetEllipse(m_cellSideLength, _rounded, 1.0f, ColorTable[(int)_nextPlayer], ColorTable[0]));
-            bool _canDisplay = _stone.Display(m_panel, m_policy.BoardUpdatePolicy.FindDead(_nextPlayer, _rounded, m_stones.ToArray()));
-
-            if (_canDisplay)
-            {
-                m_stones.Add(_stone);
-                m_currentMoveIndex = m_stones.Count;
-            }
+            Place(_stone);
         }
         public void ShowFromCurrentIndex(int _difference)
         {
@@ -124,10 +116,19 @@ namespace DolFINSim_junuver
         }
         private void Place(Stone _stone)
         {
-            Stone[] _deadStones = _stone.FindDead(m_stones.ToArray(), m_policy.BoardUpdatePolicy);
+            if (_stone.IsIllegal(m_stones.ToArray(), m_policy))
+            {
+                return;
+            }
+            Stone[] _deadStones = _stone.FindDead(m_stones.ToArray(), m_policy);
             if (_deadStones.Count() > 0)
             {
-                
+                _stone.Display(m_panel);
+                Array.ForEach(_deadStones, s => s.Destroy(m_panel));
+            }
+            else if (!_stone.IsForbidden(m_stones.ToArray(), m_policy))
+            {
+                _stone.Display(m_panel);
             }
         }
         private Point GetPoint(IntegerVector2 _position,  bool _isForStone)
@@ -177,7 +178,7 @@ namespace DolFINSim_junuver
 
             for (int i = 0; i < _index; i++)
             {
-                m_stones[i].Display(m_panel, );
+                Place(m_stones[i]);
             }
             for (int i = _index; i < m_stones.Count; i++)
             {

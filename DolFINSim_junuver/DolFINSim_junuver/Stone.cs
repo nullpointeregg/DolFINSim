@@ -60,17 +60,17 @@ namespace DolFINSim_junuver
         {
             _panel.Children.Remove(m_piece);
         }
-        public Stone[] FindDead(Stone[] _placedStones, BoardUpdatePolicy _policy)
+        public Stone[] FindDead(Stone[] _placedStones, Policy _policy)
         {
-            return _policy.FindDead(m_player, m_position, _placedStones);
+            return _policy.BoardUpdatePolicy.FindDead(m_player, m_position, _placedStones);
         }
-        public bool IsIllegal(Stone[] _placedStones, ForbiddenMovePolicy _policy)
+        public bool IsIllegal(Stone[] _placedStones, Policy _policy)
         {
-            return _policy.IsIllegal(m_player, m_position, _placedStones);
+            return _policy.ForbiddenMovePolicy.IsIllegal(m_player, m_position, _placedStones);
         }
-        public bool IsForbidden(Stone[] _placedStones, ForbiddenMovePolicy _policy)
+        public bool IsForbidden(Stone[] _placedStones, Policy _policy)
         {
-            return _policy.IsForbidden(m_player, m_position, _placedStones);
+            return _policy.ForbiddenMovePolicy.IsForbidden(m_player, m_position, _placedStones);
         }
         public bool IsOnDisplay(IntegerVector2 _position, Panel _panel)
         {
