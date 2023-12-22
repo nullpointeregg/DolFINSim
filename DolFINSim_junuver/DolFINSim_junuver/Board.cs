@@ -39,7 +39,7 @@ namespace DolFINSim_junuver
             Player _nextPlayer = m_policy.PlayerCalculationPolicy.GetPlayer(m_currentMoveIndex);
 
             Stone _stone = new Stone(_rounded, _nextPlayer, GetEllipse(m_cellSideLength, _rounded, 1.0f, ColorTable[(int)_nextPlayer], ColorTable[0]));
-            Place(_stone, true);
+            Place(_stone, m_currentMoveIndex, true);
         }
         public void ShowFromCurrentIndex(int _difference)
         {
@@ -114,35 +114,36 @@ namespace DolFINSim_junuver
                 }
             }
         }
-        private void Place(Stone _stone, bool _isNew)
+        private void Place(Stone _stone, int _currentMoveIndex, bool _isNew)
         {
-            if (_stone.IsIllegal(m_stones.Take(m_currentMoveIndex).ToArray(), m_policy))
+            if (_stone.IsIllegal(m_stones.Take(_currentMoveIndex).ToArray(), m_policy))
             {
                 return;
             }
-            Stone[] _deadStones = _stone.FindDead(m_stones.Take(m_currentMoveIndex).ToArray(), m_policy);
+            Stone[] _deadStones = _stone.FindDead(m_stones.Take(_currentMoveIndex).ToArray(), m_policy);
             if (_deadStones.Count() > 0)
             {
                 _stone.Display(m_panel);
                 Array.ForEach(_deadStones, s => s.Destroy(m_panel));
                 if (_isNew)
                 {
-                    if (m_currentMoveIndex != m_stones.Count)
-                        TakeList(m_currentMoveIndex);
+                    if (_currentMoveIndex != m_stones.Count)
+                        TakeList(_currentMoveIndex);
                     m_stones.Add(_stone);
+                    m_currentMoveIndex = _currentMoveIndex + 1;
+
                 }
-                m_currentMoveIndex++;
             }
             else if (!_stone.IsForbidden(m_stones.ToArray(), m_policy))
             {
                 _stone.Display(m_panel);
                 if (_isNew)
                 {
-                    if (m_currentMoveIndex != m_stones.Count)
-                        TakeList(m_currentMoveIndex);
+                    if (_currentMoveIndex != m_stones.Count)
+                        TakeList(_currentMoveIndex);
                     m_stones.Add(_stone);
+                    m_currentMoveIndex = _currentMoveIndex + 1;
                 }
-                m_currentMoveIndex++;
             }
         }
         private Point GetPoint(IntegerVector2 _position,  bool _isForStone)
@@ -185,21 +186,21 @@ namespace DolFINSim_junuver
             return new IntegerVector2(_indexX - 1, Height - _indexY);
         }
         #endregion
-        private void PlaceTo(int _index)
+        private void PlaceTo(int _moveCount)
         {
-            if (_index > m_stones.Count || _index < 0)
+            if (_moveCount > m_stones.Count || _moveCount < 0)
                 return;
 
-            for (int i = 0; i < _index; i++)
+            for (int i = 0; i < _moveCount; i++)
             {
-                Place(m_stones[i], false);
+                Place(m_stones[i], i, false);
             }
-            for (int i = _index; i < m_stones.Count; i++)
+            for (int i = _moveCount; i < m_stones.Count; i++)
             {
                 m_stones[i].Destroy(m_panel);
             }
 
-            m_currentMoveIndex = _index;
+            m_currentMoveIndex = _moveCount;
         }
         private void Draw9Points()
         {
@@ -244,7 +245,7 @@ namespace DolFINSim_junuver
         {
             m_stones.RemoveRange(_toIndex, m_stones.Count - _toIndex);
         }
-        public Board(Board _board, Panel _panel, Policy _policy) : this(_board.Width, _board.Height, _board.m_stones, _panel, _policy)
+        public Board(Board _board) : this(_board.Width, _board.Height, _board.m_stones, _board.m_panel, _board.m_policy)
         {
 
         }

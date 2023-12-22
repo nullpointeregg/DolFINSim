@@ -49,11 +49,13 @@ namespace DolFINSim_junuver
         }
         public void Display(Panel _panel)
         {
-            _panel.Children.Add(m_piece);
+            if (!_panel.Children.Contains(m_piece))
+                _panel.Children.Add(m_piece);
         }
         public void Destroy(Panel _panel)
         {
-            _panel.Children.Remove(m_piece);
+            if (_panel.Children.Contains(m_piece))
+                _panel.Children.Remove(m_piece);
         }
         public Stone[] FindDead(Stone[] _placedStones, Policy _policy)
         {
