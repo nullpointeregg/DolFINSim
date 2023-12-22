@@ -9,14 +9,14 @@ namespace DolFINSim_junuver
 {
     public class BoardUpdatePolicy
     {
-        private readonly IntegerVector2[] s_goPlusDiffs = new IntegerVector2[]
+        private static readonly IntegerVector2[] s_goPlusDiffs = new IntegerVector2[]
         {
             new IntegerVector2(0, 1),   // Up
             new IntegerVector2(1, 0),   // Right
             new IntegerVector2(0, -1),  // Down
             new IntegerVector2(-1, 0)   // Left
         };
-        private readonly IntegerVector2[] s_goCrossDiffs = new IntegerVector2[]
+        private static readonly IntegerVector2[] s_goCrossDiffs = new IntegerVector2[]
         {
             new IntegerVector2(1, 1),   // top right
             new IntegerVector2(1, -1),  // bottom right
@@ -49,9 +49,24 @@ namespace DolFINSim_junuver
                 default: break;
             }
         }
-        public IntegerVector2[] FindDead(Player _enemy, IntegerVector2 _position, Stone[] _placedStones)
+        public Stone[] FindDead(Player _enemy, IntegerVector2 _position, Stone[] _placedStones)
         {
-            return m_boardUpdateFunc(_enemy, _position, _placedStones);
+            IntegerVector2[] _deadStonePositions =  m_boardUpdateFunc(_enemy, _position, _placedStones);
+            List<Stone> _deadStones = new List<Stone>();
+            for (int i = 0; i < _placedStones.Length; i++)
+            {
+                for (int j = 0; j < _deadStonePositions.Length; j++)
+                {
+                    if (_placedStones[i].IsOnDisplay(_deadStonePositions[j], m_panel))
+                    {
+                        _deadStones.Add(_placedStones[i]);
+                        break;
+                    }
+                }
+            }
+
+            return _deadStones.ToArray();
+
         }
         private IntegerVector2[] FindPlusDead(Player _enemy, IntegerVector2 _position, Stone[] _placedStones)
         {
@@ -137,7 +152,7 @@ namespace DolFINSim_junuver
 
             return _deadList.ToArray();
         }
-        public IntegerVector2[] FindCrossDead(Player _enemy, IntegerVector2 _position, Stone[] _placedStones)
+        private IntegerVector2[] FindCrossDead(Player _enemy, IntegerVector2 _position, Stone[] _placedStones)
         {
             Player[][] _playerMap = GetInitializedPlayerArray(_placedStones);
             _playerMap[_position.Y][_position.X] = _enemy;
@@ -221,7 +236,7 @@ namespace DolFINSim_junuver
 
             return _deadList.ToArray();
         }
-        public IntegerVector2[] ReturnEmpty(Player _enemy, IntegerVector2 _position, Stone[] _placedStones)
+        private IntegerVector2[] ReturnEmpty(Player _enemy, IntegerVector2 _position, Stone[] _placedStones)
         {
             return new IntegerVector2[0];
         }

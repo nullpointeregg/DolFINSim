@@ -9,14 +9,14 @@ namespace DolFINSim_junuver
 {
     public class ForbiddenMovePolicy
     {
-        private readonly IntegerVector2[] s_goPlusDiffs = new IntegerVector2[]
+        private static readonly IntegerVector2[] s_goPlusDiffs = new IntegerVector2[]
         {
             new IntegerVector2(0, 1),   // Up
             new IntegerVector2(1, 0),   // Right
             new IntegerVector2(0, -1),  // Down
             new IntegerVector2(-1, 0)   // Left
         };
-        private readonly IntegerVector2[] s_goCrossDiffs = new IntegerVector2[]
+        private static readonly IntegerVector2[] s_goCrossDiffs = new IntegerVector2[]
         {
             new IntegerVector2(1, 1),   // top right
             new IntegerVector2(1, -1),  // bottom right
@@ -27,23 +27,26 @@ namespace DolFINSim_junuver
         private readonly int m_width;
         private readonly int m_height;
         private readonly Panel m_panel;
+        private readonly IntegerVector2[] m_goDiffs;
+        private readonly Func<Player, IntegerVector2, Stone[], bool>[] m_illegalMoveFuncs;
         private readonly Func<Player, IntegerVector2, Stone[], bool>[] m_forbiddenMoveFuncs;
-        public ForbiddenMovePolicy(int _width, int _height, Panel _panel, params ForbiddenMovePolicyEnum[] _forbiddens)
+        public ForbiddenMovePolicy(int _width, int _height, Panel _panel, BoardUpdatePolicyEnum _boardUpdatePolicy, params ForbiddenMovePolicyEnum[] _forbiddens)
         {
             m_width = _width;
             m_height = _height;
             m_panel = _panel;
 
+            var _illegalMoveFuncsList = new List<Func<Player, IntegerVector2, Stone[], bool>>();
             var _forbiddenMoveFuncList = new List<Func<Player, IntegerVector2, Stone[], bool>>();
             for (int i = 0; i < _forbiddens.Length; i++)
             {
                 switch (_forbiddens[i])
                 {
                     case ForbiddenMovePolicyEnum.Outside:
-                        _forbiddenMoveFuncList.Add(IsOutside);
+                        _illegalMoveFuncsList.Add(IsOutside);
                         break;
                     case ForbiddenMovePolicyEnum.Overlay:
-                        _forbiddenMoveFuncList.Add(IsOverlay);
+                        _illegalMoveFuncsList.Add(IsOverlay);
                         break;
                     case ForbiddenMovePolicyEnum.Ko:
                         _forbiddenMoveFuncList.Add(IsKo);
@@ -61,9 +64,27 @@ namespace DolFINSim_junuver
             if (_forbiddenMoveFuncList.Count == 0)
                 _forbiddenMoveFuncList.Add(ReturnsFalse);
 
+            m_illegalMoveFuncs = _illegalMoveFuncsList.ToArray();
             m_forbiddenMoveFuncs = _forbiddenMoveFuncList.ToArray();
+
+            switch (_boardUpdatePolicy)
+            {
+                case BoardUpdatePolicyEnum.None:
+                    break;
+                case BoardUpdatePolicyEnum.Plus:
+                    m_goDiffs = s_goPlusDiffs;
+                    break;
+                case BoardUpdatePolicyEnum.Cross:
+                    m_goDiffs = s_goCrossDiffs;
+                    break;
+                default: break;
+            }
         }
 
+        public bool IsIllegal(Player _player, IntegerVector2 _position, Stone[] _placedStones)
+        {
+            return m_illegalMoveFuncs.Any(f => f(_player, _position, _placedStones));
+        }
         public bool IsForbidden(Player _player, IntegerVector2 _position, Stone[] _placedStones)
         {
             return m_forbiddenMoveFuncs.Any(f => f(_player, _position, _placedStones));
@@ -76,11 +97,11 @@ namespace DolFINSim_junuver
         {
             return _placedStones.Any(s => s.IsOnDisplay(_position, m_panel));
         }
-        private bool IsKo(Player _player, IntegerVector2 _position, Stone[] _placedStones)
+        public bool IsKo(Player _player, IntegerVector2 _position, Stone[] _placedStones)
         {
             return false;
         }
-        private bool IsSuicide(Player _player, IntegerVector2 _position, Stone[] _placedStones)
+        public bool IsSuicide(Player _player, IntegerVector2 _position, Stone[] _placedStones)
         {
             Player[][] _playerMap = GetInitializedPlayerArray(_placedStones);
             _playerMap[_position.Y][_position.X] = _player;
@@ -100,8 +121,8 @@ namespace DolFINSim_junuver
                             // Dead가 Alive로 바뀔 수 있는지 검사
                             for (int i = 0; i < 4; i++)
                             {
-                                int _x = _centerX + s_goPlusDiffs[i].X;
-                                int _y = _centerY + s_goPlusDiffs[i].Y;
+                                int _x = _centerX + m_goDiffs[i].X;
+                                int _y = _centerY + m_goDiffs[i].Y;
                                 if (_x >= 0 && _x < m_width && _y >= 0 && _y < m_height)
                                 {
                                     if (_statusMap[_y][_x] == Status.Alive || _statusMap[_y][_x] == Status.Unoccupied)
@@ -117,8 +138,8 @@ namespace DolFINSim_junuver
                             {
                                 for (int i = 0; i < 4; i++)
                                 {
-                                    int _x = _centerX + s_goPlusDiffs[i].X;
-                                    int _y = _centerY + s_goPlusDiffs[i].Y;
+                                    int _x = _centerX + m_goDiffs[i].X;
+                                    int _y = _centerY + m_goDiffs[i].Y;
                                     if (_x >= 0 && _x < m_width && _y >= 0 && _y < m_height)
                                     {
                                         if (_statusMap[_y][_x] == Status.Unknown)
@@ -136,17 +157,17 @@ namespace DolFINSim_junuver
                 }
             } while (_changed);
 
-            List<IntegerVector2> _deadList = new List<IntegerVector2>();
+            List<IntegerVector2> _suicideList = new List<IntegerVector2>();
             for (int y = 0; y < _statusMap.Length; y++)
             {
                 for (int x = 0; x < _statusMap[y].Length; x++)
                 {
                     if (_statusMap[y][x] == Status.Dead)
-                        _deadList.Add(new IntegerVector2(x, y));
+                        _suicideList.Add(new IntegerVector2(x, y));
                 }
             }
 
-            return _deadList.Count != 0;
+            return _suicideList.Count != 0;
         }
         private bool IsRenzu(Player _player, IntegerVector2 _position, Stone[] _placedStones)
         {

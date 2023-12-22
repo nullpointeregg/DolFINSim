@@ -41,26 +41,13 @@ namespace DolFINSim_junuver
                 return;
             TakeList(m_currentMoveIndex);
             Stone _stone = new Stone(_rounded, _nextPlayer, GetEllipse(m_cellSideLength, _rounded, 1.0f, ColorTable[(int)_nextPlayer], ColorTable[0]));
-            m_stones.Add(_stone);
-            _stone.Display(m_panel, (Player _player, IntegerVector2 _position) =>
-            {
-                IntegerVector2[] _deadStonePositions = m_policy.BoardUpdatePolicy.FindDead(_player, _position, m_stones.ToArray());
-                List<Stone> _deadStones = new List<Stone>();
-                for (int i = 0; i < m_stones.Count; i++)
-                {
-                    for (int j = 0; j < _deadStonePositions.Length; j++)
-                    {
-                        if (m_stones[i].IsOnDisplay(_deadStonePositions[j], m_panel))
-                        {
-                            _deadStones.Add(m_stones[i]);
-                            break;
-                        }
-                    }
-                }
+            bool _canDisplay = _stone.Display(m_panel, m_policy.BoardUpdatePolicy.FindDead(_nextPlayer, _rounded, m_stones.ToArray()));
 
-                return _deadStones.ToArray();
-            });
-            m_currentMoveIndex = m_stones.Count;
+            if (_canDisplay)
+            {
+                m_stones.Add(_stone);
+                m_currentMoveIndex = m_stones.Count;
+            }
         }
         public void ShowFromCurrentIndex(int _difference)
         {
@@ -70,7 +57,7 @@ namespace DolFINSim_junuver
             if (_index > m_stones.Count)
                 _index = m_stones.Count;
 
-            DisplayTo(_index);
+            PlaceTo(_index);
         }
         public void DrawBoard()
         {
@@ -119,7 +106,7 @@ namespace DolFINSim_junuver
                 Draw9Points();
 
             //Drawing Stones
-            DisplayTo(m_stones.Count);
+            PlaceTo(m_stones.Count);
         }
         public void UpdateLabels(params TextBlock[] _textBlocks)
         {
@@ -133,6 +120,14 @@ namespace DolFINSim_junuver
                     _textBlocks[i].Text = $"{m_currentMoveIndex + i + 1}. {_player}";
                     _textBlocks[i].Foreground = ColorTable[(int)_player];
                 }
+            }
+        }
+        private void Place(Stone _stone)
+        {
+            Stone[] _deadStones = _stone.FindDead(m_stones.ToArray(), m_policy.BoardUpdatePolicy);
+            if (_deadStones.Count() > 0)
+            {
+                
             }
         }
         private Point GetPoint(IntegerVector2 _position,  bool _isForStone)
@@ -175,31 +170,14 @@ namespace DolFINSim_junuver
             return new IntegerVector2(_indexX - 1, Height - _indexY);
         }
         #endregion
-        private void DisplayTo(int _index)
+        private void PlaceTo(int _index)
         {
             if (_index > m_stones.Count || _index < 0)
                 return;
 
             for (int i = 0; i < _index; i++)
             {
-                m_stones[i].Display(m_panel, (Player _player, IntegerVector2 _position) =>
-                {
-                    IntegerVector2[] _deadStonePositions = m_policy.BoardUpdatePolicy.FindDead(_player, _position, m_stones.ToArray());
-                    List<Stone> _deadStones = new List<Stone>();
-                    for (int j = 0; j < m_stones.Count; j++)
-                    {
-                        for (int k = 0; k < _deadStonePositions.Length; k++)
-                        {
-                            if (m_stones[j].IsOnDisplay(_deadStonePositions[k], m_panel))
-                            {
-                                _deadStones.Add(m_stones[j]);
-                                break;
-                            }
-                        }
-                    }
-
-                    return _deadStones.ToArray();
-                });
+                m_stones[i].Display(m_panel, );
             }
             for (int i = _index; i < m_stones.Count; i++)
             {

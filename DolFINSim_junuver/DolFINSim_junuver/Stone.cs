@@ -24,20 +24,20 @@ namespace DolFINSim_junuver
             new SolidColorBrush(Colors.Yellow)
         };
 
-        private readonly IntegerVector2 m_indexPosition;
+        private readonly IntegerVector2 m_position;
         private readonly Player m_player;
         private readonly Ellipse m_piece;
-        public Stone(Stone _stone, Func<IntegerVector2, SolidColorBrush, Ellipse> _getEllipseFunc) : this(_stone, _getEllipseFunc(_stone.m_indexPosition, ColorTable[(int)_stone.m_player]))
+        public Stone(Stone _stone, Func<IntegerVector2, SolidColorBrush, Ellipse> _getEllipseFunc) : this(_stone, _getEllipseFunc(_stone.m_position, ColorTable[(int)_stone.m_player]))
         {
 
         }
-        public Stone(Stone _stone, Ellipse _piece) : this(_stone.m_indexPosition, _stone.m_player, _piece)
+        public Stone(Stone _stone, Ellipse _piece) : this(_stone.m_position, _stone.m_player, _piece)
         {
 
         }
         public Stone(IntegerVector2 _position, Player _player, Ellipse _piece)
         {
-            m_indexPosition = _position;
+            m_position = _position;
             m_player = _player;
             m_piece = _piece;
         }
@@ -46,28 +46,35 @@ namespace DolFINSim_junuver
         {
             if (m_panel == null)
             {
-                _grid[m_indexPosition.Y][m_indexPosition.X] = m_player;
+                _grid[m_position.Y][m_position.X] = m_player;
                 return;
             }
             if (IsOnDisplay(m_panel))
-                _grid[m_indexPosition.Y][m_indexPosition.X] = m_player;
+                _grid[m_position.Y][m_position.X] = m_player;
         }
-        public void Display(Panel _panel, Func<Player, IntegerVector2, Stone[]> _findDeadFunc)
+        public void Display(Panel _panel)
         {
-            if (!IsOnDisplay(_panel))
-            {
-                _panel.Children.Add(m_piece);
-                Stone[] _deadStones = _findDeadFunc(m_player, m_indexPosition);
-                Array.ForEach(_deadStones, s => s.Destroy(_panel));
-            }
+            _panel.Children.Add(m_piece);
         }
         public void Destroy(Panel _panel)
         {
             _panel.Children.Remove(m_piece);
         }
+        public Stone[] FindDead(Stone[] _placedStones, BoardUpdatePolicy _policy)
+        {
+            return _policy.FindDead(m_player, m_position, _placedStones);
+        }
+        public bool IsIllegal(Stone[] _placedStones, ForbiddenMovePolicy _policy)
+        {
+            return _policy.IsIllegal(m_player, m_position, _placedStones);
+        }
+        public bool IsForbidden(Stone[] _placedStones, ForbiddenMovePolicy _policy)
+        {
+            return _policy.IsForbidden(m_player, m_position, _placedStones);
+        }
         public bool IsOnDisplay(IntegerVector2 _position, Panel _panel)
         {
-            return _position == m_indexPosition && IsOnDisplay(_panel);
+            return _position == m_position && IsOnDisplay(_panel);
         }
         private bool IsOnDisplay(Panel _panel)
         {

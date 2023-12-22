@@ -134,7 +134,7 @@ namespace DolFINSim_junuver
                     .Cast<Panel>()
                     .First(element => System.Windows.Controls.Grid.GetRow(element) == 0);
                 PlayerCalculationPolicy _playerCalculationPolicy = new PlayerCalculationPolicy(_playerNum, _moveNum);
-                ForbiddenMovePolicy _forbiddenMovePolicy = new ForbiddenMovePolicy(_width, _height, _panel, ForbiddenMovePolicyEnum.Outside, ForbiddenMovePolicyEnum.Overlay, ForbiddenMovePolicyEnum.Ko, ForbiddenMovePolicyEnum.Suicide);
+                ForbiddenMovePolicy _forbiddenMovePolicy = new ForbiddenMovePolicy(_width, _height, _panel, BoardUpdatePolicyEnum.Plus, ForbiddenMovePolicyEnum.Outside, ForbiddenMovePolicyEnum.Overlay, ForbiddenMovePolicyEnum.Ko, ForbiddenMovePolicyEnum.Suicide);
                 BoardUpdatePolicy _boardUpdatePolicy = new BoardUpdatePolicy(_width, _height, _panel, BoardUpdatePolicyEnum.Plus);
 
                 m_board = new Board(_width, _height, _panel, new Policy(_boardUpdatePolicy, _forbiddenMovePolicy, _playerCalculationPolicy));
