@@ -74,7 +74,7 @@ namespace DolFINSim_junuver
             _playerMap[_position.Y][_position.X] = _enemy;
             Status[][] _statusMap = GetInitializedOpponentStatusArray(_enemy, _playerMap);
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < s_goPlusDiffs.Length; i++)
             {
                 int _x = _position.X + s_goPlusDiffs[i].X;
                 int _y = _position.Y + s_goPlusDiffs[i].Y;
@@ -158,7 +158,7 @@ namespace DolFINSim_junuver
             _playerMap[_position.Y][_position.X] = _enemy;
             Status[][] _statusMap = GetInitializedOpponentStatusArray(_enemy, _playerMap);
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < s_goCrossDiffs.Length; i++)
             {
                 int _x = _position.X + s_goCrossDiffs[i].X;
                 int _y = _position.Y + s_goCrossDiffs[i].Y;
@@ -186,7 +186,7 @@ namespace DolFINSim_junuver
                         if (_statusMap[_centerY][_centerX] == Status.Dead)
                         {
                             // Dead가 Alive로 바뀔 수 있는지 검사
-                            for (int i = 0; i < 4; i++)
+                            for (int i = 0; i < s_goCrossDiffs.Length; i++)
                             {
                                 int _x = _centerX + s_goCrossDiffs[i].X;
                                 int _y = _centerY + s_goCrossDiffs[i].Y;

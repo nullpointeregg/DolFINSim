@@ -130,12 +130,29 @@ namespace DolFINSim_junuver
                 WidthText.Background = ColorTable[(int)ColorEnum.White];
                 HeightText.Background = ColorTable[(int)ColorEnum.White];
 
+                BoardUpdatePolicyEnum _boardUpdatePolicyEnum = BoardUpdatePolicyEnum.None;
+                switch ((Mode)ModeComboBox.SelectedIndex)
+                {
+                    case Mode.Analyze:
+                        _boardUpdatePolicyEnum = BoardUpdatePolicyEnum.None;
+                        break;
+                    case Mode.Normal:
+                        _boardUpdatePolicyEnum = BoardUpdatePolicyEnum.Plus;
+                        break;
+                    case Mode.Diagonal:
+                        _boardUpdatePolicyEnum = BoardUpdatePolicyEnum.Cross;
+                        break;
+                    default:
+                        _boardUpdatePolicyEnum = BoardUpdatePolicyEnum.None;
+                        break;
+                }
+
                 Panel _panel = DisplayGrid.Children
                     .Cast<Panel>()
                     .First(element => System.Windows.Controls.Grid.GetRow(element) == 0);
                 PlayerCalculationPolicy _playerCalculationPolicy = new PlayerCalculationPolicy(_playerNum, _moveNum);
-                ForbiddenMovePolicy _forbiddenMovePolicy = new ForbiddenMovePolicy(_width, _height, _panel, BoardUpdatePolicyEnum.Plus, ForbiddenMovePolicyEnum.Outside, ForbiddenMovePolicyEnum.Overlay, ForbiddenMovePolicyEnum.Ko, ForbiddenMovePolicyEnum.Suicide);
-                BoardUpdatePolicy _boardUpdatePolicy = new BoardUpdatePolicy(_width, _height, _panel, BoardUpdatePolicyEnum.Plus);
+                ForbiddenMovePolicy _forbiddenMovePolicy = new ForbiddenMovePolicy(_width, _height, _panel, _boardUpdatePolicyEnum, ForbiddenMovePolicyEnum.Outside, ForbiddenMovePolicyEnum.Overlay, ForbiddenMovePolicyEnum.Ko, ForbiddenMovePolicyEnum.Suicide);
+                BoardUpdatePolicy _boardUpdatePolicy = new BoardUpdatePolicy(_width, _height, _panel, _boardUpdatePolicyEnum);
 
                 m_board = new Board(_width, _height, _panel, new Policy(_boardUpdatePolicy, _forbiddenMovePolicy, _playerCalculationPolicy));
                 DrawCurrentBoard();
@@ -173,5 +190,15 @@ namespace DolFINSim_junuver
         {
             LogLabel.Text = _msg;
         }
+    }
+    public enum Mode
+    {
+        None = -1,
+        Analyze,
+        Normal,
+        Moku,
+        Scatter,
+        Diagonal,
+        Max
     }
 }

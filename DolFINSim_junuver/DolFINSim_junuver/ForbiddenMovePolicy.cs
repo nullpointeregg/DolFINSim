@@ -64,12 +64,11 @@ namespace DolFINSim_junuver
             if (_forbiddenMoveFuncList.Count == 0)
                 _forbiddenMoveFuncList.Add(ReturnsFalse);
 
-            m_illegalMoveFuncs = _illegalMoveFuncsList.ToArray();
-            m_forbiddenMoveFuncs = _forbiddenMoveFuncList.ToArray();
-
             switch (_boardUpdatePolicy)
             {
                 case BoardUpdatePolicyEnum.None:
+                    _forbiddenMoveFuncList.Clear();
+                    _forbiddenMoveFuncList.Add(ReturnsFalse);
                     break;
                 case BoardUpdatePolicyEnum.Plus:
                     m_goDiffs = s_goPlusDiffs;
@@ -79,6 +78,10 @@ namespace DolFINSim_junuver
                     break;
                 default: break;
             }
+
+            m_illegalMoveFuncs = _illegalMoveFuncsList.ToArray();
+            m_forbiddenMoveFuncs = _forbiddenMoveFuncList.ToArray();
+
         }
 
         public bool IsIllegal(Player _player, IntegerVector2 _position, Stone[] _placedStones)
@@ -119,7 +122,7 @@ namespace DolFINSim_junuver
                         if (_statusMap[_centerY][_centerX] == Status.Dead)
                         {
                             // Dead가 Alive로 바뀔 수 있는지 검사
-                            for (int i = 0; i < 4; i++)
+                            for (int i = 0; i < m_goDiffs.Length; i++)
                             {
                                 int _x = _centerX + m_goDiffs[i].X;
                                 int _y = _centerY + m_goDiffs[i].Y;
@@ -136,7 +139,7 @@ namespace DolFINSim_junuver
                             // 바뀌지 않았다면 주변 Unknown을 CouldBeDead로 바꾼다.
                             if (_statusMap[_centerY][_centerX] != Status.Alive)
                             {
-                                for (int i = 0; i < 4; i++)
+                                for (int i = 0; i < m_goDiffs.Length; i++)
                                 {
                                     int _x = _centerX + m_goDiffs[i].X;
                                     int _y = _centerY + m_goDiffs[i].Y;
