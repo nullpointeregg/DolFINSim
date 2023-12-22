@@ -104,14 +104,9 @@ namespace DolFINSim_junuver
         {
             for (int i = 0; i < _textBlocks.Length; i++)
             {
-                if (m_currentMoveIndex + i >= Width * Height)
-                    _textBlocks[i].Text = "";
-                else
-                {
-                    Player _player = m_policy.PlayerCalculationPolicy.GetPlayer(m_currentMoveIndex + i);
-                    _textBlocks[i].Text = $"{m_currentMoveIndex + i + 1}. {_player}";
-                    _textBlocks[i].Foreground = ColorTable[(int)_player];
-                }
+                Player _player = m_policy.PlayerCalculationPolicy.GetPlayer(m_currentMoveIndex + i);
+                _textBlocks[i].Text = $"{m_currentMoveIndex + i + 1}. {_player}";
+                _textBlocks[i].Foreground = ColorTable[(int)_player];
             }
         }
         private void Place(Stone _stone, int _currentMoveIndex, bool _isNew)
