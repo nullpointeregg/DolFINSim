@@ -27,7 +27,7 @@ namespace DolFINSim_junuver
         private readonly int m_width;
         private readonly int m_height;
         private readonly Panel m_panel;
-        private readonly Func<Player, IntegerVector2, Stone[], IntegerVector2[]> m_boardUpdateFunc;
+        private readonly Func<PlayerEnum, IntegerVector2, Stone[], IntegerVector2[]> m_boardUpdateFunc;
 
         public BoardUpdatePolicy(int _width, int _height, Panel _panel, BoardUpdatePolicyEnum _boardUpdatePolicy)
         {
@@ -49,7 +49,7 @@ namespace DolFINSim_junuver
                 default: break;
             }
         }
-        public Stone[] FindDead(Player _enemy, IntegerVector2 _position, Stone[] _placedStones)
+        public Stone[] FindDead(PlayerEnum _enemy, IntegerVector2 _position, Stone[] _placedStones)
         {
             IntegerVector2[] _deadStonePositions =  m_boardUpdateFunc(_enemy, _position, _placedStones);
             List<Stone> _deadStones = new List<Stone>();
@@ -68,9 +68,9 @@ namespace DolFINSim_junuver
             return _deadStones.ToArray();
 
         }
-        private IntegerVector2[] FindPlusDead(Player _enemy, IntegerVector2 _position, Stone[] _placedStones)
+        private IntegerVector2[] FindPlusDead(PlayerEnum _enemy, IntegerVector2 _position, Stone[] _placedStones)
         {
-            Player[][] _playerMap = GetInitializedPlayerArray(_placedStones);
+            PlayerEnum[][] _playerMap = GetInitializedPlayerArray(_placedStones);
             _playerMap[_position.Y][_position.X] = _enemy;
             Status[][] _statusMap = GetInitializedOpponentStatusArray(_enemy, _playerMap);
 
@@ -152,9 +152,9 @@ namespace DolFINSim_junuver
 
             return _deadList.ToArray();
         }
-        private IntegerVector2[] FindCrossDead(Player _enemy, IntegerVector2 _position, Stone[] _placedStones)
+        private IntegerVector2[] FindCrossDead(PlayerEnum _enemy, IntegerVector2 _position, Stone[] _placedStones)
         {
-            Player[][] _playerMap = GetInitializedPlayerArray(_placedStones);
+            PlayerEnum[][] _playerMap = GetInitializedPlayerArray(_placedStones);
             _playerMap[_position.Y][_position.X] = _enemy;
             Status[][] _statusMap = GetInitializedOpponentStatusArray(_enemy, _playerMap);
 
@@ -236,25 +236,25 @@ namespace DolFINSim_junuver
 
             return _deadList.ToArray();
         }
-        private IntegerVector2[] ReturnEmpty(Player _enemy, IntegerVector2 _position, Stone[] _placedStones)
+        private IntegerVector2[] ReturnEmpty(PlayerEnum _enemy, IntegerVector2 _position, Stone[] _placedStones)
         {
             return new IntegerVector2[0];
         }
-        private Player[][] GetInitializedPlayerArray(Stone[] _placedStones)
+        private PlayerEnum[][] GetInitializedPlayerArray(Stone[] _placedStones)
         {
-            var _map = new Player[m_height][];
+            var _map = new PlayerEnum[m_height][];
             for (int y = 0; y < m_height; y++)
             {
-                _map[y] = new Player[m_width];
+                _map[y] = new PlayerEnum[m_width];
                 for (int x = 0; x < m_width; x++)
                 {
-                    _map[y][x] = Player.None;
+                    _map[y][x] = PlayerEnum.None;
                 }
             }
             Array.ForEach(_placedStones, s => s.PlaceStone(_map, m_panel));
             return _map;
         }
-        private Status[][] GetInitializedOpponentStatusArray(Player _enemy, Player[][] _playerMap)
+        private Status[][] GetInitializedOpponentStatusArray(PlayerEnum _enemy, PlayerEnum[][] _playerMap)
         {
             Status[][] _statusMap = new Status[m_height][];
             for (int i = 0; i < m_height; i++)
@@ -266,8 +266,8 @@ namespace DolFINSim_junuver
             {
                 for (int x = 0; x < _statusMap[y].Length; x++)
                 {
-                    Player _cell = _playerMap[y][x];
-                    if (_cell == Player.None)
+                    PlayerEnum _cell = _playerMap[y][x];
+                    if (_cell == PlayerEnum.None)
                         _statusMap[y][x] = Status.Unoccupied;
                     else if (_cell == _enemy)
                         _statusMap[y][x] = Status.Enemy;

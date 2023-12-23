@@ -26,7 +26,7 @@ namespace DolFINSim_junuver
         };
 
         private readonly IntegerVector2 m_position;
-        private readonly Player m_player;
+        private readonly PlayerEnum m_player;
         private readonly Ellipse m_piece;
         public Stone(Stone _stone, Func<IntegerVector2, SolidColorBrush, Ellipse> _getEllipseFunc) : this(_stone, _getEllipseFunc(_stone.m_position, ColorTable[(int)_stone.m_player]))
         {
@@ -36,14 +36,14 @@ namespace DolFINSim_junuver
         {
 
         }
-        public Stone(IntegerVector2 _position, Player _player, Ellipse _piece)
+        public Stone(IntegerVector2 _position, PlayerEnum _player, Ellipse _piece)
         {
             m_position = _position;
             m_player = _player;
             m_piece = _piece;
         }
 
-        public void PlaceStone(in Player[][] _grid, Panel m_panel)
+        public void PlaceStone(in PlayerEnum[][] _grid, Panel m_panel)
         {
             if (IsOnDisplay(m_panel))
                 _grid[m_position.Y][m_position.X] = m_player;
@@ -84,7 +84,7 @@ namespace DolFINSim_junuver
         }
     }
 
-    public enum Player
+    public enum PlayerEnum
     {
 
         None = -1, // 바둑판의 빈 공간

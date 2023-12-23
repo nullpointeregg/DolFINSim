@@ -28,16 +28,16 @@ namespace DolFINSim_junuver
         private readonly int m_height;
         private readonly Panel m_panel;
         private readonly IntegerVector2[] m_goDiffs;
-        private readonly Func<Player, IntegerVector2, Stone[], bool>[] m_illegalMoveFuncs;
-        private readonly Func<Player, IntegerVector2, Stone[], bool>[] m_forbiddenMoveFuncs;
+        private readonly Func<PlayerEnum, IntegerVector2, Stone[], bool>[] m_illegalMoveFuncs;
+        private readonly Func<PlayerEnum, IntegerVector2, Stone[], bool>[] m_forbiddenMoveFuncs;
         public ForbiddenMovePolicy(int _width, int _height, Panel _panel, BoardUpdatePolicyEnum _boardUpdatePolicy, params ForbiddenMovePolicyEnum[] _forbiddens)
         {
             m_width = _width;
             m_height = _height;
             m_panel = _panel;
 
-            var _illegalMoveFuncsList = new List<Func<Player, IntegerVector2, Stone[], bool>>();
-            var _forbiddenMoveFuncList = new List<Func<Player, IntegerVector2, Stone[], bool>>();
+            var _illegalMoveFuncsList = new List<Func<PlayerEnum, IntegerVector2, Stone[], bool>>();
+            var _forbiddenMoveFuncList = new List<Func<PlayerEnum, IntegerVector2, Stone[], bool>>();
             for (int i = 0; i < _forbiddens.Length; i++)
             {
                 switch (_forbiddens[i])
@@ -84,29 +84,29 @@ namespace DolFINSim_junuver
 
         }
 
-        public bool IsIllegal(Player _player, IntegerVector2 _position, Stone[] _placedStones)
+        public bool IsIllegal(PlayerEnum _player, IntegerVector2 _position, Stone[] _placedStones)
         {
             return m_illegalMoveFuncs.Any(f => f(_player, _position, _placedStones));
         }
-        public bool IsForbidden(Player _player, IntegerVector2 _position, Stone[] _placedStones)
+        public bool IsForbidden(PlayerEnum _player, IntegerVector2 _position, Stone[] _placedStones)
         {
             return m_forbiddenMoveFuncs.Any(f => f(_player, _position, _placedStones));
         }
-        private bool IsOutside(Player _player, IntegerVector2 _position, Stone[] _placedStones)
+        private bool IsOutside(PlayerEnum _player, IntegerVector2 _position, Stone[] _placedStones)
         {
             return _position.X < 0 || _position.X >= m_width || _position.Y < 0 || _position.Y >= m_height;
         } 
-        private bool IsOverlay(Player _player, IntegerVector2 _position, Stone[] _placedStones)
+        private bool IsOverlay(PlayerEnum _player, IntegerVector2 _position, Stone[] _placedStones)
         {
             return _placedStones.Any(s => s.IsOnDisplay(_position, m_panel));
         }
-        public bool IsKo(Player _player, IntegerVector2 _position, Stone[] _placedStones)
+        public bool IsKo(PlayerEnum _player, IntegerVector2 _position, Stone[] _placedStones)
         {
             return false;
         }
-        public bool IsSuicide(Player _player, IntegerVector2 _position, Stone[] _placedStones)
+        public bool IsSuicide(PlayerEnum _player, IntegerVector2 _position, Stone[] _placedStones)
         {
-            Player[][] _playerMap = GetInitializedPlayerArray(_placedStones);
+            PlayerEnum[][] _playerMap = GetInitializedPlayerArray(_placedStones);
             _playerMap[_position.Y][_position.X] = _player;
             Status[][] _statusMap = GetInitializedplayerStatusArray(_player, _playerMap);
             _statusMap[_position.Y][_position.X] = Status.Dead;
@@ -172,29 +172,29 @@ namespace DolFINSim_junuver
 
             return _suicideList.Count != 0;
         }
-        private bool IsRenzu(Player _player, IntegerVector2 _position, Stone[] _placedStones)
+        private bool IsRenzu(PlayerEnum _player, IntegerVector2 _position, Stone[] _placedStones)
         {
             return false;
         }
-        private bool ReturnsFalse(Player _player, IntegerVector2 _position, Stone[] _placedStones)
+        private bool ReturnsFalse(PlayerEnum _player, IntegerVector2 _position, Stone[] _placedStones)
         {
             return false;
         }
-        private Player[][] GetInitializedPlayerArray(Stone[] _placedStones)
+        private PlayerEnum[][] GetInitializedPlayerArray(Stone[] _placedStones)
         {
-            var _map = new Player[m_height][];
+            var _map = new PlayerEnum[m_height][];
             for (int y = 0; y < m_height; y++)
             {
-                _map[y] = new Player[m_width];
+                _map[y] = new PlayerEnum[m_width];
                 for (int x = 0; x < m_width; x++)
                 {
-                    _map[y][x] = Player.None;
+                    _map[y][x] = PlayerEnum.None;
                 }
             }
             Array.ForEach(_placedStones, s => s.PlaceStone(_map, m_panel));
             return _map;
         }
-        private Status[][] GetInitializedplayerStatusArray(Player _player, Player[][] _playerMap)
+        private Status[][] GetInitializedplayerStatusArray(PlayerEnum _player, PlayerEnum[][] _playerMap)
         {
             Status[][] _statusMap = new Status[m_height][];
             for (int i = 0; i < m_height; i++)
@@ -206,8 +206,8 @@ namespace DolFINSim_junuver
             {
                 for (int x = 0; x < _statusMap[y].Length; x++)
                 {
-                    Player _cell = _playerMap[y][x];
-                    if (_cell == Player.None)
+                    PlayerEnum _cell = _playerMap[y][x];
+                    if (_cell == PlayerEnum.None)
                         _statusMap[y][x] = Status.Unoccupied;
                     else if (_cell == _player)
                         _statusMap[y][x] = Status.Unknown;

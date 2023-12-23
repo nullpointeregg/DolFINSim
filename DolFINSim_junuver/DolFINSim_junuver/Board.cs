@@ -37,7 +37,7 @@ namespace DolFINSim_junuver
         public void PlaceNew(Point _rawPoint)
         {
             IntegerVector2 _rounded = GetRoundedIndex(_rawPoint);
-            Player _nextPlayer = m_policy.PlayerCalculationPolicy.GetPlayer(m_currentMoveIndex);
+            PlayerEnum _nextPlayer = m_policy.PlayerCalculationPolicy.GetPlayer(m_currentMoveIndex);
 
             Stone _stone = new Stone(_rounded, _nextPlayer, GetEllipse(m_cellSideLength, _rounded, 1.0f, ColorTable[(int)_nextPlayer], ColorTable[0]));
             Place(_stone, m_currentMoveIndex, true);
@@ -105,7 +105,7 @@ namespace DolFINSim_junuver
         {
             for (int i = 0; i < _textBlocks.Length; i++)
             {
-                Player _player = m_policy.PlayerCalculationPolicy.GetPlayer(m_currentMoveIndex + i);
+                PlayerEnum _player = m_policy.PlayerCalculationPolicy.GetPlayer(m_currentMoveIndex + i);
                 _textBlocks[i].Text = $"{m_currentMoveIndex + i + 1}. {_player}";
                 _textBlocks[i].Foreground = ColorTable[(int)_player];
             }

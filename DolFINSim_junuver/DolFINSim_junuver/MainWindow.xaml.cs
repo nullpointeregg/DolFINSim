@@ -68,7 +68,6 @@ namespace DolFINSim_junuver
         private void CanvasOnMouseDown(object sender, MouseButtonEventArgs e)
         {
             Point _cursorPoint = e.GetPosition(this);
-            Log(_cursorPoint.ToString());
             _cursorPoint.Y -= 25;
             m_board.PlaceNew(_cursorPoint);
             m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
@@ -132,7 +131,7 @@ namespace DolFINSim_junuver
             _isHeightInputSolid &= _height > 1;
             _isWidthInputSolid &= _width > 1;
             _isMoveInputSolid &= _moveNum > 0;
-            _isPlayerInputSolid &= _playerNum > 0 && _playerNum <= (int)Player.Max;
+            _isPlayerInputSolid &= _playerNum > 0 && _playerNum <= (int)PlayerEnum.Max;
 
             if (!_isWidthInputSolid)
             {
@@ -206,18 +205,15 @@ namespace DolFINSim_junuver
             if (FormGrid.Children.Contains(m_deselectToolRect))
             {
                 OnDeselectTool(null, null);
-                Log("준우 귀여워");
             }
             else
             {
                 FormGrid.Children.Add(m_deselectToolRect);
-                Log("준우 사랑해");
             }
         }
         private void OnDeselectTool(object _sender, MouseButtonEventArgs _e)
         {
             FormGrid.Children.Remove(m_deselectToolRect);
-            Log("준우 귀여워");
         }
 
         #endregion
