@@ -14,6 +14,22 @@
             <RowDefinition Height="25"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
+        <Grid x:Name="ToolGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"></ColumnDefinition>
+                <ColumnDefinition Width="60"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="FileButton"
+                    Content="File"
+                    FontSize="15"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Background="#FFFFFF"
+                    BorderThickness="0"
+                    FontWeight="Bold"
+                    Grid.Row="0"></Button>
+        </Grid>
         <Grid x:Name="MainGrid"
               Grid.Row="1">
             <Grid.ColumnDefinitions>
