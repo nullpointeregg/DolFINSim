@@ -8,43 +8,49 @@
         Title="MainWindow" Height="800" Width="900">
     <Grid x:Name="FormGrid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="300"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid x:Name="DisplayGrid"
+        <Grid x:Name="MainGrid"
+              Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="300"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid x:Name="DisplayGrid"
               Background="#9e9e9e"
               Grid.Column="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="200"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Canvas x:Name="MainCanvas"
-                    Grid.Column="0">
-            </Canvas>
-            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="200"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Grid x:Name="DirectionGrid"
+                <Canvas x:Name="MainCanvas"
+                    Grid.Column="0">
+                </Canvas>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid x:Name="DirectionGrid"
                   Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Button x:Name="FirstMoveButton"
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="FirstMoveButton"
                         Content="First"
                         FontSize="30"
                         FontWeight="Bold"
@@ -52,7 +58,7 @@
                         HorizontalAlignment="Stretch"
                         Click="OnClickFirstMoveButton"
                         Grid.Column="0"></Button>
-                    <Button x:Name="Backward10Button"
+                        <Button x:Name="Backward10Button"
                         Content="&lt;&lt;"
                         FontSize="30"
                         FontWeight="Bold"
@@ -60,7 +66,7 @@
                         HorizontalAlignment="Stretch"
                         Click="OnClickBackward10Button"
                         Grid.Column="1"></Button>
-                    <Button x:Name="BackwardButton"
+                        <Button x:Name="BackwardButton"
                         Content="&lt;"
                         FontSize="30"
                         FontWeight="Bold"
@@ -68,7 +74,7 @@
                         HorizontalAlignment="Stretch"
                         Click="OnClickBackwardButton"
                         Grid.Column="2"></Button>
-                    <Button x:Name="ForwardButton"
+                        <Button x:Name="ForwardButton"
                         Content="&gt;"
                         FontSize="30"
                         FontWeight="Bold"
@@ -76,7 +82,7 @@
                         HorizontalAlignment="Stretch"
                         Click="OnClickForwardButton"
                         Grid.Column="3"></Button>
-                    <Button x:Name="Forward10Button"
+                        <Button x:Name="Forward10Button"
                         Content="&gt;&gt;"
                         FontSize="30"
                         FontWeight="Bold"
@@ -84,7 +90,7 @@
                         HorizontalAlignment="Stretch"
                         Click="OnClickForward10Button"
                         Grid.Column="4"></Button>
-                    <Button x:Name="LastMoveButton"
+                        <Button x:Name="LastMoveButton"
                         Content="Last"
                         FontSize="30"
                         FontWeight="Bold"
@@ -92,8 +98,8 @@
                         HorizontalAlignment="Stretch"
                         Click="OnClickLastMoveButton"
                         Grid.Column="6"></Button>
-                </Grid>
-                <TextBlock Text="Your Turn:"
+                    </Grid>
+                    <TextBlock Text="Your Turn:"
                        FontFamily="Times New Roman"
                        FontSize="40"
                        FontWeight="Bold"
@@ -101,52 +107,52 @@
                        VerticalAlignment="Center"
                        Margin="5,0,0,0"
                        Grid.Row="1"></TextBlock>
-                <Rectangle Grid.Row="2"
+                    <Rectangle Grid.Row="2"
                        Fill="#888888"></Rectangle>
-                <Grid x:Name="PlayerDisplayGrid"
+                    <Grid x:Name="PlayerDisplayGrid"
                   Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="5*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="5*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="FirstPlayerLabel"
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="5*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="5*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="FirstPlayerLabel"
                            FontFamily="Times New Roman"
                            FontWeight="Bold"
                            FontSize="30"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            Grid.Column="0"/>
-                    <TextBlock Text=">"
+                        <TextBlock Text=">"
                            FontFamily="Times New Roman"
                            FontWeight="Bold"
                            FontSize="30"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            Grid.Column="1"/>
-                    <TextBlock x:Name="SecondPlayerLabel"
+                        <TextBlock x:Name="SecondPlayerLabel"
                            FontFamily="Times New Roman"
                            FontSize="20"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            Grid.Column="2"/>
-                    <TextBlock Text=">"
+                        <TextBlock Text=">"
                            FontFamily="Times New Roman"
                            FontWeight="Bold"
                            FontSize="30"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            Grid.Column="3"/>
-                    <TextBlock x:Name="ThirdPlayerLabel"
+                        <TextBlock x:Name="ThirdPlayerLabel"
                            FontFamily="Times New Roman"
                            FontSize="20"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            Grid.Column="4"/>
-                </Grid>
-                <TextBlock x:Name="LogLabel"
+                    </Grid>
+                    <TextBlock x:Name="LogLabel"
                        Text="[Log]"
                        FontFamily="Times New Roman"
                        FontSize="30"
@@ -155,27 +161,27 @@
                        Margin="5,0,0,0"
                        Grid.Row="3"
                        ></TextBlock>
+                </Grid>
             </Grid>
-        </Grid>
-        <Grid x:Name="NavigationGrid"
+            <Grid x:Name="NavigationGrid"
                 Background="#aaaaaa"
                 Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Button x:Name="NewButton"
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Button x:Name="NewButton"
                     Content="New"
                     FontFamily="Times New Roman"
                     FontSize="30"
@@ -183,7 +189,7 @@
                     HorizontalAlignment="Stretch"
                     Click="OnClickNewButton"
                     Grid.Row="0"></Button>
-            <Button x:Name="FitButton"
+                <Button x:Name="FitButton"
                     Content="Fit on Screen"
                     FontFamily="Times New Roman"
                     FontSize="30"
@@ -191,63 +197,63 @@
                     HorizontalAlignment="Stretch"
                     Click="OnClickFitButton"
                     Grid.Row="6"></Button>
-            <TextBlock Text="Width:"
+                <TextBlock Text="Width:"
                        FontFamily="Times New Roman"
                        FontSize="30"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Margin="5,0,0,0"
                        Grid.Row="1"></TextBlock>
-            <TextBlock Text="Height:"
+                <TextBlock Text="Height:"
                        FontFamily="Times New Roman"
                        FontSize="30"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Center"
                        Margin="0,0,65,0"
                        Grid.Row="1"></TextBlock>
-            <TextBlock Text="Mode:"
+                <TextBlock Text="Mode:"
                        FontFamily="Times New Roman"
                        FontSize="30"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Margin="5,0,0,0"
                        Grid.Row="2"></TextBlock>
-            <TextBlock Text="Moku:"
+                <TextBlock Text="Moku:"
                        FontFamily="Times New Roman"
                        FontSize="30"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Margin="5,0,0,0"
                        Grid.Row="3"></TextBlock>
-            <TextBlock Text="Activate:"
+                <TextBlock Text="Activate:"
                        FontFamily="Times New Roman"
                        FontSize="30"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Center"
                        Margin="0,0,45,0"
                        Grid.Row="3"></TextBlock>
-            <TextBlock Text="Move:"
+                <TextBlock Text="Move:"
                        FontFamily="Times New Roman"
                        FontSize="30"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Margin="5,0,0,0"
                        Grid.Row="4"></TextBlock>
-            <TextBlock Text="Overlay:"
+                <TextBlock Text="Overlay:"
                        FontFamily="Times New Roman"
                        FontSize="30"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Center"
                        Margin="0,0,45,0"
                        Grid.Row="4"></TextBlock>
-            <TextBlock Text="Player Number:"
+                <TextBlock Text="Player Number:"
                        FontFamily="Times New Roman"
                        FontSize="30"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Margin="5,0,0,0"
                        Grid.Row="5"></TextBlock>
-            <TextBox x:Name="WidthText"
+                <TextBox x:Name="WidthText"
                      Text="19"
                      Width="50"
                      Height="40"
@@ -257,7 +263,7 @@
                      VerticalAlignment="Center"
                      Margin="90,0,0,0"
                      Grid.Row="1"></TextBox>
-            <TextBox x:Name="HeightText"
+                <TextBox x:Name="HeightText"
                      Text="19"
                      Width="50"
                      Height="40"
@@ -267,7 +273,7 @@
                      VerticalAlignment="Center"
                      Margin="0,0,10,0"
                      Grid.Row="1"></TextBox>
-            <TextBox x:Name="MokuText"
+                <TextBox x:Name="MokuText"
                      Text="5"
                      Width="50"
                      Height="40"
@@ -277,7 +283,7 @@
                      VerticalAlignment="Center"
                      Margin="90,0,0,0"
                      Grid.Row="3"></TextBox>
-            <TextBox x:Name="MoveText"
+                <TextBox x:Name="MoveText"
                      Text="1"
                      Width="50"
                      Height="40"
@@ -287,7 +293,7 @@
                      VerticalAlignment="Center"
                      Margin="90,0,0,0"
                      Grid.Row="4"></TextBox>
-            <TextBox x:Name="PlayerText"
+                <TextBox x:Name="PlayerText"
                      Text="2"
                      Width="50"
                      Height="40"
@@ -297,7 +303,7 @@
                      VerticalAlignment="Center"
                      Margin="200,0,0,0"
                      Grid.Row="5"></TextBox>
-            <ComboBox x:Name="ModeComboBox"
+                <ComboBox x:Name="ModeComboBox"
                       SelectedIndex="1"
                       Width="150"
                       Height="40"
@@ -308,34 +314,35 @@
                       FontSize="30"
                       Grid.Row="2"
                       SelectionChanged="OnSelectMode">
-                <ComboBoxItem>Analyse</ComboBoxItem>
-                <ComboBoxItem>Normal</ComboBoxItem>
-                <ComboBoxItem>Moku</ComboBoxItem>
-                <ComboBoxItem>Scatter</ComboBoxItem>
-                <ComboBoxItem>Diagonal</ComboBoxItem>
-            </ComboBox>
-            <CheckBox x:Name="ActivateMokuCheckBox"
+                    <ComboBoxItem>Analyse</ComboBoxItem>
+                    <ComboBoxItem>Normal</ComboBoxItem>
+                    <ComboBoxItem>Moku</ComboBoxItem>
+                    <ComboBoxItem>Scatter</ComboBoxItem>
+                    <ComboBoxItem>Diagonal</ComboBoxItem>
+                </ComboBox>
+                <CheckBox x:Name="ActivateMokuCheckBox"
                       HorizontalAlignment="Right"
                       VerticalAlignment="Center"
                       Margin="0,0,10,0"
                       Grid.Row="3"
                       Checked="OnCheckActivate"
                       Unchecked="OnUncheckActivate">
-                <CheckBox.LayoutTransform>
-                    <ScaleTransform ScaleX="2" ScaleY="2"></ScaleTransform>
-                </CheckBox.LayoutTransform>
-            </CheckBox>
-            <CheckBox x:Name="OverlayCheckBox"
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="2" ScaleY="2"></ScaleTransform>
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
+                <CheckBox x:Name="OverlayCheckBox"
                       HorizontalAlignment="Right"
                       VerticalAlignment="Center"
                       Margin="0,0,10,0"
                       Checked="OnCheckOverlay"
                       Unchecked="OnUncheckOverlay"
                       Grid.Row="4">
-                <CheckBox.LayoutTransform>
-                    <ScaleTransform ScaleX="2" ScaleY="2"></ScaleTransform>
-                </CheckBox.LayoutTransform>
-            </CheckBox>
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="2" ScaleY="2"></ScaleTransform>
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

@@ -56,7 +56,9 @@ namespace DolFINSim_junuver
         #region Interactive Methods
         private void CanvasOnMouseDown(object sender, MouseEventArgs e)
         {
-            m_board.PlaceNew(e.GetPosition(this));
+            Point _cursorPoint = e.GetPosition(this);
+            _cursorPoint.Y -= 25;
+            m_board.PlaceNew(_cursorPoint);
             m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
         }
         private void OnClickFirstMoveButton(object sender, RoutedEventArgs e)
