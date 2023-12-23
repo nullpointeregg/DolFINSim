@@ -108,7 +108,7 @@ namespace DolFINSim_junuver
                 _textBlocks[i].Text = $"{m_currentMoveIndex + i + 1}. {_player}";
                 _textBlocks[i].Foreground = ColorTable[(int)_player];
             }
-        }
+        }                                                  
         private void Place(Stone _stone, int _currentMoveIndex, bool _isNew)
         {
             if (_stone.IsIllegal(m_stones.Take(_currentMoveIndex).ToArray(), m_policy))

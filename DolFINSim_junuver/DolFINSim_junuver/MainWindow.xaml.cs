@@ -39,6 +39,18 @@ namespace DolFINSim_junuver
         {
             InitializeComponent();
             MainCanvas.MouseDown += CanvasOnMouseDown;
+
+            Panel _panel = DisplayGrid.Children
+                .Cast<Panel>()
+                .First(element => System.Windows.Controls.Grid.GetRow(element) == 0);
+            PlayerCalculationPolicy _playerCalculationPolicy = new PlayerCalculationPolicy(2, 1);
+            ForbiddenMovePolicy _forbiddenMovePolicy = new ForbiddenMovePolicy(19, 19, _panel, BoardUpdatePolicyEnum.Plus, ForbiddenMovePolicyEnum.Outside, ForbiddenMovePolicyEnum.Overlay, ForbiddenMovePolicyEnum.Ko, ForbiddenMovePolicyEnum.Suicide);
+            BoardUpdatePolicy _boardUpdatePolicy = new BoardUpdatePolicy(19, 19, _panel, BoardUpdatePolicyEnum.Plus);
+
+            m_policy = new Policy(_boardUpdatePolicy, _forbiddenMovePolicy, _playerCalculationPolicy);
+            m_board = new Board(19, 19, _panel, m_policy);
+            DrawCurrentBoard();
+            m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
         }
 
         #region Interactive Methods
@@ -154,7 +166,8 @@ namespace DolFINSim_junuver
                 ForbiddenMovePolicy _forbiddenMovePolicy = new ForbiddenMovePolicy(_width, _height, _panel, _boardUpdatePolicyEnum, ForbiddenMovePolicyEnum.Outside, ForbiddenMovePolicyEnum.Overlay, ForbiddenMovePolicyEnum.Ko, ForbiddenMovePolicyEnum.Suicide);
                 BoardUpdatePolicy _boardUpdatePolicy = new BoardUpdatePolicy(_width, _height, _panel, _boardUpdatePolicyEnum);
 
-                m_board = new Board(_width, _height, _panel, new Policy(_boardUpdatePolicy, _forbiddenMovePolicy, _playerCalculationPolicy));
+                m_policy = new Policy(_boardUpdatePolicy, _forbiddenMovePolicy, _playerCalculationPolicy);
+                m_board = new Board(_width, _height, _panel, m_policy);
                 DrawCurrentBoard();
                 m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
             }
