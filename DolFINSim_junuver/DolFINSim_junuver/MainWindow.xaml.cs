@@ -30,10 +30,12 @@ namespace DolFINSim_junuver
             new SolidColorBrush(Colors.Aqua),
             new SolidColorBrush(Colors.Red),
             new SolidColorBrush(Colors.Fuchsia),
-            new SolidColorBrush(Colors.Yellow)
+            new SolidColorBrush(Colors.Yellow),
+            new SolidColorBrush(Colors.Transparent)
         };
         private Board m_board;
         private Policy m_policy;
+        private Rectangle m_deselectToolRect;
 
         public MainWindow()
         {
@@ -47,16 +49,26 @@ namespace DolFINSim_junuver
             ForbiddenMovePolicy _forbiddenMovePolicy = new ForbiddenMovePolicy(19, 19, _panel, BoardUpdatePolicyEnum.Plus, ForbiddenMovePolicyEnum.Outside, ForbiddenMovePolicyEnum.Overlay, ForbiddenMovePolicyEnum.Ko, ForbiddenMovePolicyEnum.Suicide);
             BoardUpdatePolicy _boardUpdatePolicy = new BoardUpdatePolicy(19, 19, _panel, BoardUpdatePolicyEnum.Plus);
 
+            // 시작 Board 생성 (이거 안하면 시작하고 New를 누르지 않은 상태로 Fit on Screen버튼 누르면 앱이 튕김.
             m_policy = new Policy(_boardUpdatePolicy, _forbiddenMovePolicy, _playerCalculationPolicy);
             m_board = new Board(19, 19, _panel, m_policy);
             DrawCurrentBoard();
             m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+
+            // DeselectToolRect 인스턴스 생성
+            m_deselectToolRect = new Rectangle()
+            {
+                Fill = ColorTable[(int)ColorEnum.Transparent]
+            };
+            m_deselectToolRect.MouseDown += OnDeselectTool;
+            System.Windows.Controls.Grid.SetRow(m_deselectToolRect, 1);
         }
 
         #region Interactive Methods
-        private void CanvasOnMouseDown(object sender, MouseEventArgs e)
+        private void CanvasOnMouseDown(object sender, MouseButtonEventArgs e)
         {
             Point _cursorPoint = e.GetPosition(this);
+            Log(_cursorPoint.ToString());
             _cursorPoint.Y -= 25;
             m_board.PlaceNew(_cursorPoint);
             m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
@@ -182,9 +194,32 @@ namespace DolFINSim_junuver
         }
         private void OnCheckActivate(object sender, RoutedEventArgs e) { }
         private void OnUncheckActivate(object sender, RoutedEventArgs e) { }
-        private void OnSelectMode(object sender, RoutedEventArgs e) { }
         private void OnCheckOverlay(object sender, RoutedEventArgs e) { }
         private void OnUncheckOverlay(object sender, RoutedEventArgs e) { }
+
+        /********************************************************************************/
+        /*********************<PRIVATE METHODS FOR TOOL BUTTONS>*************************/
+        /********************************************************************************/
+
+        private void OnClickFileButton(object sender, RoutedEventArgs e)
+        {
+            if (FormGrid.Children.Contains(m_deselectToolRect))
+            {
+                OnDeselectTool(null, null);
+                Log("준우 귀여워");
+            }
+            else
+            {
+                FormGrid.Children.Add(m_deselectToolRect);
+                Log("준우 사랑해");
+            }
+        }
+        private void OnDeselectTool(object _sender, MouseButtonEventArgs _e)
+        {
+            FormGrid.Children.Remove(m_deselectToolRect);
+            Log("준우 귀여워");
+        }
+
         #endregion
 
         private void DrawCurrentBoard()

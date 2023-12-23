@@ -21,7 +21,8 @@ namespace DolFINSim_junuver
             new SolidColorBrush(Colors.Aqua),
             new SolidColorBrush(Colors.Red),
             new SolidColorBrush(Colors.Fuchsia),
-            new SolidColorBrush(Colors.Yellow)
+            new SolidColorBrush(Colors.Yellow),
+            new SolidColorBrush(Colors.Transparent)
         };
 
         private readonly IntegerVector2 m_position;

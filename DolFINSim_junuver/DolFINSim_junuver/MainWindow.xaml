@@ -28,6 +28,7 @@
                     Background="#FFFFFF"
                     BorderThickness="0"
                     FontWeight="Bold"
+                    Click="OnClickFileButton"
                     Grid.Row="0"></Button>
         </Grid>
         <Grid x:Name="MainGrid"
@@ -328,8 +329,7 @@
                       Margin="90,0,0,0"
                       FontFamily="Times New Roman"
                       FontSize="30"
-                      Grid.Row="2"
-                      SelectionChanged="OnSelectMode">
+                      Grid.Row="2">
                     <ComboBoxItem>Analyse</ComboBoxItem>
                     <ComboBoxItem>Normal</ComboBoxItem>
                     <ComboBoxItem>Moku</ComboBoxItem>
