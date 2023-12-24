@@ -83,23 +83,4 @@ namespace DolFINSim_junuver
             return _panel.Children.Contains(m_piece);
         }
     }
-
-    public enum PlayerEnum
-    {
-
-        None = -1, // 바둑판의 빈 공간
-        Player1,
-        Player2,
-        Player3,
-        Player4,
-        Player5,
-        Player6,
-        Player7,
-        Player8,
-        Max,
-        // Bot
-        BotGeneral = 100,
-        Bot1,
-        Bot2
-    }
 }

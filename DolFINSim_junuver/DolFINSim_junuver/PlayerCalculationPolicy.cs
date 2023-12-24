@@ -8,21 +8,22 @@ namespace DolFINSim_junuver
 {
     public class PlayerCalculationPolicy
     {
-        private readonly PlayerEnum[] _playerBuffer;
+        private readonly PlayerEnum[] m_playerBuffer;
+        private readonly Player[] m_players;
         public PlayerCalculationPolicy(int _playerNum, int _moveNum)
         {
-            _playerBuffer = new PlayerEnum[_playerNum * _moveNum];
+            m_playerBuffer = new PlayerEnum[_playerNum * _moveNum];
             for (int i = 0; i  < _playerNum; i++)
             {
                 for (int j = 0; j < _moveNum; j++)
                 {
-                    _playerBuffer[i * _moveNum + j] = (PlayerEnum)i;
+                    m_playerBuffer[i * _moveNum + j] = (PlayerEnum)i;
                 }
             }
         }
         public PlayerEnum GetPlayer(int _index)
         {
-            return _playerBuffer[_index % _playerBuffer.Length];
+            return m_playerBuffer[_index % m_playerBuffer.Length];
         }
     }
 }

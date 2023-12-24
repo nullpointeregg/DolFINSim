@@ -155,6 +155,8 @@ namespace DolFINSim_junuver
                 WidthText.Background = ColorTable[(int)ColorEnum.White];
                 HeightText.Background = ColorTable[(int)ColorEnum.White];
 
+
+
                 BoardUpdatePolicyEnum _boardUpdatePolicyEnum = BoardUpdatePolicyEnum.None;
                 switch ((Mode)ModeComboBox.SelectedIndex)
                 {
@@ -190,7 +192,7 @@ namespace DolFINSim_junuver
             ClearCanvas();
             m_board = new Board(m_board);
             m_board.DrawBoard();
-        }
+        } 
         private void OnCheckActivate(object sender, RoutedEventArgs e) { }
         private void OnUncheckActivate(object sender, RoutedEventArgs e) { }
         private void OnCheckOverlay(object sender, RoutedEventArgs e) { }
