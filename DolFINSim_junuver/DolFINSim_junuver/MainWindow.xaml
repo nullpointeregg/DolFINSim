@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DolFINSim_junuver"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="900">
+        Title="MainWindow"
+        Height="800" Width="900"
+        WindowStartupLocation="CenterScreen">
     <Grid x:Name="FormGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -35,6 +37,7 @@
                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                     Background="#FFFFFF"
                     BorderThickness="0"
+                    Click="OnClickOptionButton"
                     Grid.Row="0" Grid.Column="1"></Button>
             <Button x:Name="HelpButton"
                     Content="Help"
@@ -42,6 +45,7 @@
                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                     Background="#FFFFFF"
                     BorderThickness="0"
+                    Click="OnClickHelpButton"
                     Grid.Row="0" Grid.Column="2"></Button>
         </Grid>
         <Grid x:Name="MainGrid"

@@ -81,7 +81,6 @@ namespace DolFINSim_junuver
 
             m_illegalMoveFuncs = _illegalMoveFuncsList.ToArray();
             m_forbiddenMoveFuncs = _forbiddenMoveFuncList.ToArray();
-
         }
 
         public bool IsIllegal(PlayerEnum _player, IntegerVector2 _position, Stone[] _placedStones)

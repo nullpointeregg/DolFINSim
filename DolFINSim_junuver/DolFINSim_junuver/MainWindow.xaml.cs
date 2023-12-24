@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace DolFINSim_junuver
@@ -37,6 +30,30 @@ namespace DolFINSim_junuver
         private Policy m_policy;
         private Rectangle m_deselectToolRect;
 
+
+        #region Interactive Methods
+        private void CanvasOnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Point _cursorPoint = e.GetPosition(this);
+            _cursorPoint.Y -= 25;
+            m_board.PlaceNew(_cursorPoint);
+            m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+        }
+        private void OnClickFirstMoveButton(object sender, RoutedEventArgs e)
+        {
+            m_board.ShowFromCurrentIndex(-20050906);
+            m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+        }
+        private void OnClickBackward10Button(object sender, RoutedEventArgs e)
+        {
+            m_board.ShowFromCurrentIndex(-10);
+            m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+        }
+        private void OnClickBackwardButton(object sender, RoutedEventArgs e)
+        {
+            m_board.ShowFromCurrentIndex(-1);
+            m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+        }
         public MainWindow()
         {
             InitializeComponent();
@@ -62,30 +79,6 @@ namespace DolFINSim_junuver
             };
             m_deselectToolRect.MouseDown += OnDeselectTool;
             System.Windows.Controls.Grid.SetRow(m_deselectToolRect, 1);
-        }
-
-        #region Interactive Methods
-        private void CanvasOnMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Point _cursorPoint = e.GetPosition(this);
-            _cursorPoint.Y -= 25;
-            m_board.PlaceNew(_cursorPoint);
-            m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
-        }
-        private void OnClickFirstMoveButton(object sender, RoutedEventArgs e)
-        {
-            m_board.ShowFromCurrentIndex(-20050906);
-            m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
-        }
-        private void OnClickBackward10Button(object sender, RoutedEventArgs e)
-        {
-            m_board.ShowFromCurrentIndex(-10);
-            m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
-        }
-        private void OnClickBackwardButton(object sender, RoutedEventArgs e)
-        {
-            m_board.ShowFromCurrentIndex(-1);
-            m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
         }
         private void OnClickForward10Button(object sender, RoutedEventArgs e)
         {
@@ -155,8 +148,6 @@ namespace DolFINSim_junuver
                 WidthText.Background = ColorTable[(int)ColorEnum.White];
                 HeightText.Background = ColorTable[(int)ColorEnum.White];
 
-
-
                 BoardUpdatePolicyEnum _boardUpdatePolicyEnum = BoardUpdatePolicyEnum.None;
                 switch ((Mode)ModeComboBox.SelectedIndex)
                 {
@@ -186,6 +177,8 @@ namespace DolFINSim_junuver
                 DrawCurrentBoard();
                 m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
             }
+            FileSelectionWindow _newWindow = new FileSelectionWindow();
+            _newWindow.Show();
         }
         private void OnClickFitButton(object sender, RoutedEventArgs e)
         {
@@ -203,6 +196,32 @@ namespace DolFINSim_junuver
         /********************************************************************************/
 
         private void OnClickFileButton(object sender, RoutedEventArgs e)
+        {
+            if (FormGrid.Children.Contains(m_deselectToolRect))
+            {
+                OnDeselectTool(null, null);
+            }
+            else
+            {
+                FormGrid.Children.Add(m_deselectToolRect);
+            }
+        }
+        private void OnClickOptionButton(object sender, RoutedEventArgs e)
+        {
+            if (FormGrid.Children.Contains(m_deselectToolRect))
+            {
+                OnDeselectTool(null, null);
+            }
+            else
+            {
+                FormGrid.Children.Add(m_deselectToolRect);
+                Popup _popup = new Popup()
+                {
+
+                };
+            }
+        }
+        private void OnClickHelpButton(object sender, RoutedEventArgs e)
         {
             if (FormGrid.Children.Contains(m_deselectToolRect))
             {
