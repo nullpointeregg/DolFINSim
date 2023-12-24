@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -204,10 +205,11 @@ namespace DolFINSim_junuver
             else
             {
                 BackGrid.Children.Add(m_deselectToolRect);
-                m_currentOpenDropdown = new FloatingDropdown(BackGrid, new Point(0, 25), new string[] { "save", "load" }, new RoutedEventHandler[]
+                m_currentOpenDropdown = new FloatingDropdown(BackGrid, new Point(0, 25), new string[] { "Save", "Save As", "Load" }, new RoutedEventHandler[]
                 {
-                    OnClickOptionButton,
-                    OnClickHelpButton
+                    OnClickSaveButton,
+                    OnClickSaveAsButton,
+                    OnClickLoadButton
                 });
             }
         }
@@ -238,6 +240,25 @@ namespace DolFINSim_junuver
             BackGrid.Children.Remove(m_deselectToolRect);
             m_currentOpenDropdown.Destroy();
 
+        }
+
+        #endregion
+
+        #region File I/O Methods
+
+        private void OnClickSaveButton(object sender, RoutedEventArgs e)
+        {
+            OnDeselectTool(null, null);
+        }
+        private void OnClickSaveAsButton(object sender, RoutedEventArgs e)
+        {
+            OnDeselectTool(null, null);
+        }
+        private void OnClickLoadButton(object sender, RoutedEventArgs e)
+        {
+            OnDeselectTool(null, null);
+            var _fileSelectionWindow = new FileSelectionWindow();
+            _fileSelectionWindow.Show();
         }
 
         #endregion
