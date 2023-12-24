@@ -29,6 +29,7 @@ namespace DolFINSim_junuver
         private Board m_board;
         private Policy m_policy;
         private Rectangle m_deselectToolRect;
+        private FloatingDropdown m_currentOpenDropdown;
 
 
         #region Interactive Methods
@@ -177,8 +178,7 @@ namespace DolFINSim_junuver
                 DrawCurrentBoard();
                 m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
             }
-            FileSelectionWindow _newWindow = new FileSelectionWindow();
-            _newWindow.Show();
+
         }
         private void OnClickFitButton(object sender, RoutedEventArgs e)
         {
@@ -197,44 +197,47 @@ namespace DolFINSim_junuver
 
         private void OnClickFileButton(object sender, RoutedEventArgs e)
         {
-            if (FormGrid.Children.Contains(m_deselectToolRect))
+            if (BackGrid.Children.Contains(m_deselectToolRect))
             {
                 OnDeselectTool(null, null);
             }
             else
             {
-                FormGrid.Children.Add(m_deselectToolRect);
+                BackGrid.Children.Add(m_deselectToolRect);
+                m_currentOpenDropdown = new FloatingDropdown(BackGrid, new Point(0, 25), new string[] { "save", "load" }, new RoutedEventHandler[]
+                {
+                    OnClickOptionButton,
+                    OnClickHelpButton
+                });
             }
         }
         private void OnClickOptionButton(object sender, RoutedEventArgs e)
         {
-            if (FormGrid.Children.Contains(m_deselectToolRect))
+            if (BackGrid.Children.Contains(m_deselectToolRect))
             {
                 OnDeselectTool(null, null);
             }
             else
             {
-                FormGrid.Children.Add(m_deselectToolRect);
-                Popup _popup = new Popup()
-                {
-
-                };
+                BackGrid.Children.Add(m_deselectToolRect);
             }
         }
         private void OnClickHelpButton(object sender, RoutedEventArgs e)
         {
-            if (FormGrid.Children.Contains(m_deselectToolRect))
+            if (BackGrid.Children.Contains(m_deselectToolRect))
             {
                 OnDeselectTool(null, null);
             }
             else
             {
-                FormGrid.Children.Add(m_deselectToolRect);
+                BackGrid.Children.Add(m_deselectToolRect);
             }
         }
         private void OnDeselectTool(object _sender, MouseButtonEventArgs _e)
         {
-            FormGrid.Children.Remove(m_deselectToolRect);
+            BackGrid.Children.Remove(m_deselectToolRect);
+            m_currentOpenDropdown.Destroy();
+
         }
 
         #endregion
