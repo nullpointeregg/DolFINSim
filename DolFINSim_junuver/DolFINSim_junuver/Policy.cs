@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DolFINSim_junuver
 {
+    [Serializable]
     public struct Policy
     {
         public BoardUpdatePolicy BoardUpdatePolicy;

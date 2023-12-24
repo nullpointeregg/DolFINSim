@@ -225,7 +225,7 @@ namespace DolFINSim_junuver
             }
         }
         private void OnClickHelpButton(object sender, RoutedEventArgs e)
-        {
+        {/*
             if (BackGrid.Children.Contains(m_deselectToolRect))
             {
                 OnDeselectTool(null, null);
@@ -233,13 +233,13 @@ namespace DolFINSim_junuver
             else
             {
                 BackGrid.Children.Add(m_deselectToolRect);
-            }
+            }*/
         }
         private void OnDeselectTool(object _sender, MouseButtonEventArgs _e)
         {
             BackGrid.Children.Remove(m_deselectToolRect);
-            m_currentOpenDropdown.Destroy();
-
+            if (m_currentOpenDropdown != null)
+                m_currentOpenDropdown.Destroy();
         }
 
         #endregion
@@ -249,6 +249,7 @@ namespace DolFINSim_junuver
         private void OnClickSaveButton(object sender, RoutedEventArgs e)
         {
             OnDeselectTool(null, null);
+
         }
         private void OnClickSaveAsButton(object sender, RoutedEventArgs e)
         {

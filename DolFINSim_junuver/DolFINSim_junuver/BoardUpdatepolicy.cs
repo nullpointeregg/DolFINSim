@@ -7,6 +7,7 @@ using System.Windows.Controls;
 
 namespace DolFINSim_junuver
 {
+    [Serializable]
     public class BoardUpdatePolicy
     {
         private static readonly IntegerVector2[] s_goPlusDiffs = new IntegerVector2[]

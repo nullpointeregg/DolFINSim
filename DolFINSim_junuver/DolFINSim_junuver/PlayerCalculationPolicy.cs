@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DolFINSim_junuver
 {
+    [Serializable]
     public class PlayerCalculationPolicy
     {
         private readonly int[] m_playerBuffer;
