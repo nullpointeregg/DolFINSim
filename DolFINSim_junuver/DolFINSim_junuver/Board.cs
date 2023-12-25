@@ -120,7 +120,7 @@ namespace DolFINSim_junuver
         {
             if (_stone.IsIllegal(m_stones.Take(_currentMoveIndex).ToArray(), m_policy))
             {
-                throw new Exception();
+                return;
             }
             Stone[] _deadStones = _stone.FindDead(m_stones.Take(_currentMoveIndex).ToArray(), m_policy);
             if (_deadStones.Count() > 0)
