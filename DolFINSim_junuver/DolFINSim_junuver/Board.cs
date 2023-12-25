@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace DolFINSim_junuver
 {
@@ -34,13 +35,15 @@ namespace DolFINSim_junuver
         private readonly Panel m_panel;
 
         #region Public Methods
-        public void PlaceNew(Point _rawPoint)
+        public Player PlaceNew(Point _rawPoint)
         {
             IntegerVector2 _rounded = GetRoundedIndex(_rawPoint);
             Player _nextPlayer = m_policy.PlayerCalculationPolicy.GetPlayer(m_currentMoveIndex);
 
             Stone _stone = new Stone(_rounded, _nextPlayer, GetEllipse(m_cellSideLength, _rounded, 1.0f, ColorTable[(int)_nextPlayer.GetPlayer()], ColorTable[0]));
             Place(_stone, m_currentMoveIndex, true);
+
+            return _nextPlayer;
         }
         public void ShowFromCurrentIndex(int _difference)
         {
@@ -101,8 +104,13 @@ namespace DolFINSim_junuver
             //Drawing Stones
             PlaceTo(m_stones.Count);
         }
-        public void UpdateLabels(params TextBlock[] _textBlocks)
+        public void UpdateLabels(Player _currentPlayer, TextBlock[] _deadStoneTextBlocks, TextBlock[] _textBlocks)
         {
+            if (_deadStoneTextBlocks.Length > 2)
+                return;
+
+            _deadStoneTextBlocks[(int)_currentPlayer.GetPlayer()].Text = $"{_currentPlayer.GetPlayer().ToString()} : {_currentPlayer.GetCaughtStonesCount()}";
+
             for (int i = 0; i < _textBlocks.Length; i++)
             {
                 Player _player = m_policy.PlayerCalculationPolicy.GetPlayer(m_currentMoveIndex + i);
@@ -114,7 +122,7 @@ namespace DolFINSim_junuver
         {
             if (_stone.IsIllegal(m_stones.Take(_currentMoveIndex).ToArray(), m_policy))
             {
-                return;
+                throw new Exception();
             }
             Stone[] _deadStones = _stone.FindDead(m_stones.Take(_currentMoveIndex).ToArray(), m_policy);
             if (_deadStones.Count() > 0)
@@ -185,7 +193,7 @@ namespace DolFINSim_junuver
         private void PlaceTo(int _moveCount)
         {
             if (_moveCount > m_stones.Count || _moveCount < 0)
-                return;
+                throw new Exception();
             
             ClearBoard();
             for (int i = 0; i < _moveCount; i++)

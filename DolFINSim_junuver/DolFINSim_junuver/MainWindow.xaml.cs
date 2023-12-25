@@ -38,23 +38,23 @@ namespace DolFINSim_junuver
         {
             Point _cursorPoint = e.GetPosition(this);
             _cursorPoint.Y -= 25;
-            m_board.PlaceNew(_cursorPoint);
-            m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+            Player _nextPlayer = m_board.PlaceNew(_cursorPoint);
+            m_board.UpdateLabels(_nextPlayer, new TextBlock[] { Player1Counter, Player2Counter }, new TextBlock[] { FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel });
         }
         private void OnClickFirstMoveButton(object sender, RoutedEventArgs e)
         {
-            m_board.ShowFromCurrentIndex(-20050906);
-            m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+            Player _nextPlayer = m_board.ShowFromCurrentIndex(-20050906);
+            m_board.UpdateLabels(_nextPlayer, new TextBlock[] { Player1Counter, Player2Counter }, new TextBlock[] { FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel });
         }
         private void OnClickBackward10Button(object sender, RoutedEventArgs e)
         {
-            m_board.ShowFromCurrentIndex(-10);
-            m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+            Player _nextPlayer = m_board.ShowFromCurrentIndex(-10);
+            m_board.UpdateLabels(_nextPlayer, new TextBlock[] { Player1Counter, Player2Counter }, new TextBlock[] { FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel });
         }
         private void OnClickBackwardButton(object sender, RoutedEventArgs e)
         {
-            m_board.ShowFromCurrentIndex(-1);
-            m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+            Player _nextPlayer = m_board.ShowFromCurrentIndex(-1);
+            m_board.UpdateLabels(_nextPlayer, new TextBlock[] { Player1Counter, Player2Counter }, new TextBlock[] { FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel });
         }
         public MainWindow()
         {
@@ -72,7 +72,7 @@ namespace DolFINSim_junuver
             m_policy = new Policy(_boardUpdatePolicy, _forbiddenMovePolicy, _playerCalculationPolicy);
             m_board = new Board(19, 19, _panel, m_policy);
             DrawCurrentBoard();
-            m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+            m_board.UpdateLabels(, new TextBlock[] { Player1Counter, Player2Counter }, new TextBlock[] { FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel });
 
             // DeselectToolRect 인스턴스 생성
             m_deselectToolRect = new Rectangle()
@@ -85,17 +85,17 @@ namespace DolFINSim_junuver
         private void OnClickForward10Button(object sender, RoutedEventArgs e)
         {
             m_board.ShowFromCurrentIndex(10);
-            m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+            m_board.UpdateLabels(_nextPlayer, new TextBlock[] { Player1Counter, Player2Counter }, new TextBlock[] { FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel });
         }
         private void OnClickLastMoveButton(object sender, RoutedEventArgs e)
         {
             m_board.ShowFromCurrentIndex(20050906);
-            m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+            m_board.UpdateLabels(_nextPlayer, new TextBlock[] { Player1Counter, Player2Counter }, new TextBlock[] { FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel });
         }
         private void OnClickForwardButton(object sender, RoutedEventArgs e)
         {
             m_board.ShowFromCurrentIndex(1);
-            m_board.UpdateLabels(FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel);
+            m_board.UpdateLabels(_nextPlayer, new TextBlock[] { Player1Counter, Player2Counter }, new TextBlock[] { FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel });
         }
         private void OnClickNewButton(object sender, RoutedEventArgs e)
         {

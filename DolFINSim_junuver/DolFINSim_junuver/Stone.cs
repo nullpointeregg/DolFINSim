@@ -50,7 +50,9 @@ namespace DolFINSim_junuver
         }
         public Stone[] FindDead(Stone[] _placedStones, Policy _policy)
         {
-            return _policy.BoardUpdatePolicy.FindDead(m_player.GetPlayer(), m_position, _placedStones);
+            Stone[] _deadStones = _policy.BoardUpdatePolicy.FindDead(m_player.GetPlayer(), m_position, _placedStones);
+            m_player.AddCount(_deadStones.Length);
+            return _deadStones;
         }
         public bool IsIllegal(Stone[] _placedStones, Policy _policy)
         {
