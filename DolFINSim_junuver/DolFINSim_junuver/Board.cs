@@ -104,12 +104,12 @@ namespace DolFINSim_junuver
             //Drawing Stones
             PlaceTo(m_stones.Count);
         }
-        public void UpdateLabels(Player _currentPlayer, TextBlock[] _deadStoneTextBlocks, TextBlock[] _textBlocks)
+        public void UpdateLabels(TextBlock[] _deadStoneTextBlocks, TextBlock[] _textBlocks)
         {
             if (_deadStoneTextBlocks.Length > 2)
                 return;
 
-            _deadStoneTextBlocks[(int)_currentPlayer.GetPlayer()].Text = $"{_currentPlayer.GetPlayer().ToString()} : {_currentPlayer.GetCaughtStonesCount()}";
+            _deadStoneTextBlocks[0].Text = $"{_currentPlayer.GetPlayer().ToString()} : {_currentPlayer.GetCaughtStonesCount()}";
 
             for (int i = 0; i < _textBlocks.Length; i++)
             {
