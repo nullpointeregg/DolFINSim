@@ -109,8 +109,6 @@ namespace DolFINSim_junuver
             if (_deadStoneTextBlocks.Length > 2)
                 return;
 
-            _deadStoneTextBlocks[0].Text = $"{_currentPlayer.GetPlayer().ToString()} : {_currentPlayer.GetCaughtStonesCount()}";
-
             for (int i = 0; i < _textBlocks.Length; i++)
             {
                 Player _player = m_policy.PlayerCalculationPolicy.GetPlayer(m_currentMoveIndex + i);
