@@ -38,7 +38,7 @@ namespace DolFINSim_junuver
         {
             Point _cursorPoint = e.GetPosition(this);
             _cursorPoint.Y -= 25;
-            Player _nextPlayer = m_board.PlaceNew(_cursorPoint);
+            m_board.PlaceNew(_cursorPoint);
             m_board.UpdateLabels(new TextBlock[] { Player1Counter, Player2Counter }, new TextBlock[] { FirstPlayerLabel, SecondPlayerLabel, ThirdPlayerLabel });
         }
         private void OnClickFirstMoveButton(object sender, RoutedEventArgs e)
@@ -187,7 +187,10 @@ namespace DolFINSim_junuver
             m_board = new Board(m_board);
             m_board.DrawBoard();
         } 
-        private void OnCheckActivate(object sender, RoutedEventArgs e) { }
+        private void OnCheckActivate(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void OnUncheckActivate(object sender, RoutedEventArgs e) { }
         private void OnCheckOverlay(object sender, RoutedEventArgs e) { }
         private void OnUncheckOverlay(object sender, RoutedEventArgs e) { }

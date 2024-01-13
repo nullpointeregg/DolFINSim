@@ -1,0 +1,7 @@
+D:\backup\github\DolFINSim\DolFIN_Formula\DolFIN_Formula\bin\Debug\DolFIN_Formula.exe.config
+D:\backup\github\DolFINSim\DolFIN_Formula\DolFIN_Formula\bin\Debug\DolFIN_Formula.exe
+D:\backup\github\DolFINSim\DolFIN_Formula\DolFIN_Formula\bin\Debug\DolFIN_Formula.pdb
+D:\backup\github\DolFINSim\DolFIN_Formula\DolFIN_Formula\obj\Debug\DolFIN_Formula.csproj.AssemblyReference.cache
+D:\backup\github\DolFINSim\DolFIN_Formula\DolFIN_Formula\obj\Debug\DolFIN_Formula.csproj.CoreCompileInputs.cache
+D:\backup\github\DolFINSim\DolFIN_Formula\DolFIN_Formula\obj\Debug\DolFIN_Formula.exe
+D:\backup\github\DolFINSim\DolFIN_Formula\DolFIN_Formula\obj\Debug\DolFIN_Formula.pdb

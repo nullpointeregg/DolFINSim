@@ -1,0 +1,8 @@
+D:\backup\github\DolFINSim\CompatibilityTest\CompatibilityTest\bin\Debug\CompatibilityTest.exe.config
+D:\backup\github\DolFINSim\CompatibilityTest\CompatibilityTest\bin\Debug\CompatibilityTest.exe
+D:\backup\github\DolFINSim\CompatibilityTest\CompatibilityTest\bin\Debug\CompatibilityTest.pdb
+D:\backup\github\DolFINSim\CompatibilityTest\CompatibilityTest\obj\Debug\CompatibilityTest.csproj.AssemblyReference.cache
+D:\backup\github\DolFINSim\CompatibilityTest\CompatibilityTest\obj\Debug\CompatibilityTest.csproj.CoreCompileInputs.cache
+D:\backup\github\DolFINSim\CompatibilityTest\CompatibilityTest\obj\Debug\CompatibilityTest.exe
+D:\backup\github\DolFINSim\CompatibilityTest\CompatibilityTest\obj\Debug\CompatibilityTest.pdb
+D:\backup\github\DolFINSim\CompatibilityTest\CompatibilityTest\obj\Debug\CompatibilityTest.csproj.ResolveComReference.cache
